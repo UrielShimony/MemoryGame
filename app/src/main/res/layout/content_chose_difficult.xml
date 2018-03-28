@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.urielshimony.myapplication.choseDifficultActivity"
+    tools:showIn="@layout/activity_chose_difficult">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">s
+
+        <Button
+            android:id="@+id/Easy"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:onClick="chooseLvlClick"
+            android:text="Easy"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/Medium"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:onClick="chooseLvlClick"
+            android:text="Medium"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/Hard"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:onClick="chooseLvlClick"
+            android:text="Hard"
+            android:textSize="30sp" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+</android.support.constraint.ConstraintLayout>
