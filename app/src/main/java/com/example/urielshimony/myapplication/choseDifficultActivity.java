@@ -1,5 +1,6 @@
 package com.example.urielshimony.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,50 +16,53 @@ import java.util.Date;
 
 public class choseDifficultActivity extends AppCompatActivity {
     private String date;
+    private String dificultLvl;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //dont know what is it
         setContentView(R.layout.activity_chose_difficult);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         Bundle extras = getIntent().getExtras();
-        String name = extras.getString("name");
+        this.name = extras.getString("name");
         this.date = getIntent().getSerializableExtra("date_of_birth").toString();
 
-        getSupportActionBar().setTitle("Hello " + name);  // provide compatibility to all the versions
-//        int dificult = extras.getInt("dificult_lvl");
-//        Log.d("dificult ", "" + dificult);
-        //  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        getSupportActionBar().setTitle("Hello " + this.name);
+
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
+        String today = dateFormat.format(Calendar.getInstance().getTime());
+        if(comparDates(today, this.date)){
+            Toast.makeText(this, "happy birthday", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public void chooseLvlClick(View view) {
         switch (view.getId()) {
             case R.id.Easy:
                 Log.d("dificult is EASY", "EASY");
+                this.dificultLvl= "Easy";
                 break;
             case R.id.Medium:
                 Log.d("dificult is Medium", "MEDIUM");
+                this.dificultLvl= "Medium";
                 break;
             case R.id.Hard:
+                this.dificultLvl= "Hard";
                 Log.d("dificult is Hard", "HARD");
                 break;
         }
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
-        String today = dateFormat.format(Calendar.getInstance().getTime());
-        if(comparDates(today, this.date)){
-            Toast.makeText(this, "happy birthday", Toast.LENGTH_LONG).show();
-        };
+
+        Intent intent = new Intent(this, Game.class);
+        intent.putExtra("name", this.name);
+        intent.putExtra("date_of_birth", this.date);
+        intent.putExtra("difcult_lvl", this.dificultLvl);
+        startActivity(intent);
         Log.d("date is", this.date);
     }
 public boolean comparDates(String date1,String date2){
