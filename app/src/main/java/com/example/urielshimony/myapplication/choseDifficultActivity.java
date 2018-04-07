@@ -36,7 +36,7 @@ public class choseDifficultActivity extends AppCompatActivity {
 
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
         String today = dateFormat.format(Calendar.getInstance().getTime());
-        if(comparDates(today, this.date)){
+        if (comparDates(today, this.date)) {
             Toast.makeText(this, "happy birthday", Toast.LENGTH_LONG).show();
         }
 
@@ -46,14 +46,14 @@ public class choseDifficultActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.Easy:
                 Log.d("dificult is EASY", "EASY");
-                this.dificultLvl= "Easy";
+                this.dificultLvl = "Easy";
                 break;
             case R.id.Medium:
                 Log.d("dificult is Medium", "MEDIUM");
-                this.dificultLvl= "Medium";
+                this.dificultLvl = "Medium";
                 break;
             case R.id.Hard:
-                this.dificultLvl= "Hard";
+                this.dificultLvl = "Hard";
                 Log.d("dificult is Hard", "HARD");
                 break;
         }
@@ -65,14 +65,15 @@ public class choseDifficultActivity extends AppCompatActivity {
         startActivity(intent);
         Log.d("date is", this.date);
     }
-public boolean comparDates(String date1,String date2){
+
+    public boolean comparDates(String date1, String date2) {
         int date1Length = date1.length();
         int date2Length = date2.length();
-        String trimDate1= date1.substring(0,date1Length-2);
-        String trimDate2= date2.substring(0,date2Length-2);
+        String trimDate1 = date1.substring(0, date1Length - 2);
+        String trimDate2 = date2.substring(0, date2Length - 2);
 
         return trimDate1.equals(trimDate2);
 
-}
+    }
 }
 
