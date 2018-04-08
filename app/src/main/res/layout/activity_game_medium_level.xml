@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="com.example.urielshimony.myapplication.Game">
+    tools:context="com.example.urielshimony.myapplication.GameMediumLevel">
 
     <TextView
         android:id="@+id/Timer"
@@ -27,7 +27,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="name"
+        android:text=""
         android:textColor="@android:color/holo_red_light"
         android:textSize="20dp" />
 

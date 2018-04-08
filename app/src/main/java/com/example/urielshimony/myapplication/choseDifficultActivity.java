@@ -2,8 +2,6 @@ package com.example.urielshimony.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,7 +10,6 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class choseDifficultActivity extends AppCompatActivity {
     private String date;
@@ -58,12 +55,13 @@ public class choseDifficultActivity extends AppCompatActivity {
                 break;
         }
 
-        Intent intent = new Intent(this, Game.class);
+        Intent intent = new Intent(this, GameMediumLevel.class);
         intent.putExtra("name", this.name);
         intent.putExtra("date_of_birth", this.date);
         intent.putExtra("difcult_lvl", this.dificultLvl);
-        startActivity(intent);
         Log.d("date is", this.date);
+        startActivity(intent);
+
     }
 
     public boolean comparDates(String date1, String date2) {

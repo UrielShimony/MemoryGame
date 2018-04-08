@@ -3,23 +3,16 @@ package com.example.urielshimony.myapplication;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
-public class Game extends AppCompatActivity {
+public class GameMediumLevel extends AppCompatActivity {
     private String date;
     private String dificultLvl;
     private String name;
@@ -34,7 +27,6 @@ public class Game extends AppCompatActivity {
     Integer[] cardsArray = {101, 102, 103, 104, 105, 106, 107, 108, 201, 202, 203, 204, 205, 206, 207, 208};
     ArrayList<Integer>chosenCardsArray  =new ArrayList<Integer>();
 
-
     //actual photo
     int image101, image102, image103, image104, image105, image106, image107, image108,
             image201, image202, image203, image204, image205, image206, image207, image208;
@@ -46,9 +38,9 @@ public class Game extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_game_medium_level);
+//       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//       setSupportActionBar(toolbar);
 
         //??
         Bundle extras = getIntent().getExtras();
@@ -56,14 +48,16 @@ public class Game extends AppCompatActivity {
         this.date = getIntent().getSerializableExtra("date_of_birth").toString();
         this.dificultLvl = extras.getString("difcult_lvl");
 
-        initialImageView();
-
         //update name ,level,Timer
-        ((TextView) findViewById(R.id.nameLable)).setText(("" + this.name));
+        ((TextView) findViewById(R.id.player_name)).setText(("" + this.name));
         ((TextView) findViewById(R.id.dificultLevelLable)).setText("" + this.dificultLvl);
         setTimer();
+
+        initialImageView();
+
         //load card Image
         loadFrontCard();
+
         //mix images
         Collections.shuffle(Arrays.asList(cardsArray));
 
