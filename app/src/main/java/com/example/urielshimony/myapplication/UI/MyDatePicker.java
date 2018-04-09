@@ -1,4 +1,4 @@
-package com.example.urielshimony.myapplication;
+package com.example.urielshimony.myapplication.UI;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

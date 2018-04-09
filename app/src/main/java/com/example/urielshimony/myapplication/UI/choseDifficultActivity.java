@@ -1,4 +1,4 @@
-package com.example.urielshimony.myapplication;
+package com.example.urielshimony.myapplication.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.urielshimony.myapplication.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;

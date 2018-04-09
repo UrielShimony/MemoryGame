@@ -1,14 +1,14 @@
-package com.example.urielshimony.myapplication;
+package com.example.urielshimony.myapplication.UI;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import android.widget.DatePicker;
+
+import com.example.urielshimony.myapplication.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;
