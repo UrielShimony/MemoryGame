@@ -3,6 +3,7 @@ package com.example.urielshimony.myapplication.logic;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.example.urielshimony.myapplication.R;
@@ -19,6 +20,8 @@ public class GameManager {
     private int CardPairsToReveal;
     private MemoryCard[] cards;
     private int seconds;
+    private GridLayout gameGrid;
+
     //TODO private enum flipState = ["first", "second"];
 
     //initialize game grid by level
@@ -41,6 +44,7 @@ public class GameManager {
                 break;
         }
 //      TODO   this.cards = this.cardBoard.getCards()   Maybe unnecessary
+        this.addCardsToGrid();
         this.timesUp = false;
     }
 
@@ -104,6 +108,8 @@ public class GameManager {
          boolean isMatch = this.cardBoard.flip(flipState, cardId); //boolean function that return if there is a match, the board him self know for each card what to draw
         if(isMatch){
         handleMatch()
+        }else(){
+        flipBack()
         }
          changeFlipState(); // first-> second second -> first
          this.updateBoardUI();
@@ -120,7 +126,17 @@ public class GameManager {
 
     // update game board after adding mines
     public void updateBoardUI() {
-        //TODO update ui;
+        //TODO call a new thread
+        for (int i = 0; i < cards.length; i++) {
+
+        }
     }
 
+    public void addCardsToGrid() {
+        for (int i = 0; i < cards.length; i++) {
+            gameGrid.addView(cards[i].getImageView());
+        }
+
+
+    }
 }

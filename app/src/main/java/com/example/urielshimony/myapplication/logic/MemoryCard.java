@@ -1,6 +1,8 @@
 package com.example.urielshimony.myapplication.logic;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -8,7 +10,7 @@ import android.widget.ImageView;
  * Created by urielshimony on 09/04/2018.
  */
 
-public class MemoryCard {
+public class MemoryCard /* extends AppCompatButton*/ {
     private ImageView iv;
     private int image;
     private int viewId;
@@ -17,7 +19,8 @@ public class MemoryCard {
     private boolean cardUpside;
 
 
-    public MemoryCard(ImageView iv, int image, int viewId, int cardId) {
+    public MemoryCard(/*Context context*/ ImageView iv, int image, int viewId, int cardId) {
+//        super(context); TODO check what we prefer image || button
         this.iv = iv;
         this.image = image;
         this.viewId = viewId;
@@ -39,5 +42,6 @@ public class MemoryCard {
     public ImageView getImageView() {
         return this.iv;
     }
-//TODO public boolean flipCard()
+
+    //TODO public boolean flipCard()
 }
