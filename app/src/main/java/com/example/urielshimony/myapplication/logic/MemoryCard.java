@@ -2,46 +2,66 @@ package com.example.urielshimony.myapplication.logic;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.urielshimony.myapplication.R;
 
 /**
  * Created by urielshimony on 09/04/2018.
  */
 
-public class MemoryCard /* extends AppCompatButton*/ {
-    private ImageView iv;
+public class MemoryCard {
+    static int unRevealdImage = R.drawable.back_image;
     private int image;
-    private int viewId;
     private int cardId;
-    private boolean isActive;
-    private boolean cardUpside;
+    private int emojiId;
+    private boolean isBeenMatched;
+    private boolean isChosenCard;
 
-
-    public MemoryCard(/*Context context*/ ImageView iv, int image, int viewId, int cardId) {
-//        super(context); TODO check what we prefer image || button
-        this.iv = iv;
+    public MemoryCard(int image, int cardId, int emojiId) {
+        // todo in button image this.setBackgroundResource(unRevealdImage);
         this.image = image;
-        this.viewId = viewId;
+//        this.viewId = viewId;
         this.cardId = cardId;
+        this.emojiId = emojiId;
+        this.isChosenCard = false;
+        this.isBeenMatched = false;
     }
 
     public int getImage() {
         return this.image;
     }
 
-    public int getViewId() {
-        return this.viewId;
-    }
-
     public int getCardId() {
         return this.cardId;
     }
 
-    public ImageView getImageView() {
-        return this.iv;
+
+    public void flipBack() {
+        this.isChosenCard = false;
     }
 
-    //TODO public boolean flipCard()
+    public void flip() {
+        this.isChosenCard = true;
+    }
+
+    public int getBackImage() {
+        return unRevealdImage;
+    }
+
+
+    public boolean getIsBeenMatched() {
+        return isBeenMatched;
+    }
+
+    public int getEmojiId() {
+        return emojiId;
+    }
+
+    public void setIsMatched() {
+        this.isBeenMatched =true;
+    }
 }

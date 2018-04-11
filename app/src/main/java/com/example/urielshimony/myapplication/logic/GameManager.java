@@ -13,38 +13,36 @@ import com.example.urielshimony.myapplication.R;
  */
 
 public class GameManager {
-    //TODO  private CardBoard board;  (Maybe unnecessary)
+    private CardBoard board;
     //TODO  private int timeToEnd;
     private String difficultLvl;
     private boolean timesUp;
-    private int CardPairsToReveal;
-    private MemoryCard[] cards;
+    private int cardPairsToReveal;
+    private MemoryCard[][] cards;
     private int seconds;
-    private GridLayout gameGrid;
 
-    //TODO private enum flipState = ["first", "second"];
 
-    //initialize game grid by level
+    //initialize game by level
     public GameManager(String difficultLvl) {
         this.difficultLvl = difficultLvl;
-        switch (difficultLvl) {
+        switch (this.difficultLvl) {
             case "Easy":
-//              TODO  this.CardBoard = new CardBoard("Easy");
+                this.board = new CardBoard("Easy");
                 this.seconds = 30;
 
                 break;
             case "Medium":
-//              TODO  this.CardBoard = new CardBoard("Medium");
+                this.board = new CardBoard("Medium");
                 this.seconds = 45;
 
                 break;
             case "Hard":
-//             TODO   this.CardBoard = new CardBoard("Hard");
+                this.board = new CardBoard("Hard");
                 this.seconds = 60;
                 break;
         }
-//      TODO   this.cards = this.cardBoard.getCards()   Maybe unnecessary
-        this.addCardsToGrid();
+        this.cards = this.board.getCards();
+//        this.addCardsToGrid();
         this.timesUp = false;
     }
 
@@ -95,48 +93,52 @@ public class GameManager {
 
     //checks if the single game is in winning state - all not mined cells were revealed
     public boolean isPlayerWon() {
-        if (this.CardPairsToReveal == 0) {
+        if (this.cardPairsToReveal == 0) {
             return true;
         } else {
             return false;
         }
     }
 
-    //TODO
-    /*
-         public flipCard(flipState, int cardId){
-         boolean isMatch = this.cardBoard.flip(flipState, cardId); //boolean function that return if there is a match, the board him self know for each card what to draw
-        if(isMatch){
-        handleMatch()
-        }else(){
-        flipBack()
-        }
-         changeFlipState(); // first-> second second -> first
-         this.updateBoardUI();
-      }
-    */
 
-    private void handleMatch() {
-        this.CardPairsToReveal--;
-        if (this.CardPairsToReveal == 0) {
+     public void flipCard( int cardId ,String cardFlipState ){
+        this.board.flipCard(cardId, cardFlipState);
+        this.handleMatchs();
+     }
+
+
+    private void handleMatchs() {
+        this.cardPairsToReveal = this.board.getCardPairsToReveal();
+        if (this.cardPairsToReveal == 0) {
             endGame();
         }
     }
 
 
-    // update game board after adding mines
+    // update game board after adding mines //  unneccery because it is buttons.
     public void updateBoardUI() {
         //TODO call a new thread
+        //this.cards= this.board.getCards();
         for (int i = 0; i < cards.length; i++) {
-
+            // card.setBackgroundResource(card.currentImage); TODO
         }
     }
 
-    public void addCardsToGrid() {
-        for (int i = 0; i < cards.length; i++) {
-            gameGrid.addView(cards[i].getImageView());
-        }
+//    public void addCardsToGrid() {
+//        for (int i = 0; i < cards.length; i++) {
+//            gameGrid.addView(cards[i]);
+//        }
+//
+//
+//    }
 
-
+    public CardBoard getCardBoard() {
+        return this.board;
     }
+
+    public MemoryCard[][] getCards() {
+        return board.getCards();
+    }
+
+
 }

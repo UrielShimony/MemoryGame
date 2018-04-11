@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.urielshimony.myapplication.R;
+import com.example.urielshimony.myapplication.logic.GameManager;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -44,25 +45,29 @@ public class choseDifficultActivity extends AppCompatActivity {
     public void chooseLvlClick(View view) {
         switch (view.getId()) {
             case R.id.Easy:
-                Log.d("dificult is EASY", "EASY");
                 this.dificultLvl = "Easy";
+                GameActivity.gameManager = new GameManager(this.dificultLvl);
                 break;
             case R.id.Medium:
-                Log.d("dificult is Medium", "MEDIUM");
                 this.dificultLvl = "Medium";
+                GameActivity.gameManager = new GameManager(this.dificultLvl);
                 break;
             case R.id.Hard:
                 this.dificultLvl = "Hard";
-                Log.d("dificult is Hard", "HARD");
+                GameActivity.gameManager = new GameManager(this.dificultLvl);
                 break;
         }
 
-        Intent intent = new Intent(this, GameMediumLevel.class);
+      /*  Intent intent = new Intent(this, GameMediumLevel.class);
         intent.putExtra("name", this.name);
         intent.putExtra("date_of_birth", this.date);
         intent.putExtra("difcult_lvl", this.dificultLvl);
         Log.d("date is", this.date);
+        startActivity(intent);*/
+
+        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
+
 
     }
 
