@@ -45,7 +45,7 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         view.setBackgroundResource(((MemoryCard) view.getTag()).getImage());
-                        setEnableAll(false);
+                        view.setEnabled(false); //TODO set enable false in thr second chose
                         gameManager.flipCard(((MemoryCard) view.getTag()).getCardId(), currentFlip);
                         if (currentFlip.equals("Second")) {
                             Handler hendler = new Handler();
@@ -55,8 +55,6 @@ public class GameActivity extends AppCompatActivity {
                                     updateGrid();
                                 }
                             }, 600);
-                        } else {
-                            setEnableAll(true);
                         }
                         changeCurrentFlip();
                     }
@@ -65,19 +63,6 @@ public class GameActivity extends AppCompatActivity {
                 gameGrid.addView(buttons[i][j]);
             }
 
-        }
-    }
-
-    private void disableAll() {
-        MemoryCard[][] cards = gameManager.getCards();
-        int rows = cards.length;
-        int cols = cards[0].length;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (!cards[i][j].getIsBeenMatched()) {
-                    this.buttons[i][j].setEnabled(false);
-                }
-            }
         }
     }
 

@@ -42,7 +42,6 @@ public class GameManager {
                 break;
         }
         this.cards = this.board.getCards();
-//        this.addCardsToGrid();
         this.timesUp = false;
     }
 
@@ -109,28 +108,10 @@ public class GameManager {
 
     private void handleMatchs() {
         this.cardPairsToReveal = this.board.getCardPairsToReveal();
-        if (this.cardPairsToReveal == 0) {
-            endGame();
+        if (this.cardPairsToReveal == 0) {endGame();
         }
     }
 
-
-    // update game board after adding mines //  unneccery because it is buttons.
-    public void updateBoardUI() {
-        //TODO call a new thread
-        //this.cards= this.board.getCards();
-        for (int i = 0; i < cards.length; i++) {
-            // card.setBackgroundResource(card.currentImage); TODO
-        }
-    }
-
-//    public void addCardsToGrid() {
-//        for (int i = 0; i < cards.length; i++) {
-//            gameGrid.addView(cards[i]);
-//        }
-//
-//
-//    }
 
     public CardBoard getCardBoard() {
         return this.board;

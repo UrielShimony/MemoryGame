@@ -18,26 +18,24 @@ import javax.net.ssl.HandshakeCompletedEvent;
 public class CardBoard {
     private final static int EASY_ROWS = 3;
     private final static int EASY_COLS = 4;
-    private final static int EASY_NUM_OF_CARDS = 12;
 
     private final static int MEDIUM_ROWS = 4;
     private final static int MEDIUM_COLS = 4;
-    private final static int MEDIUM_NUM_OF_CARDS = 16;
 
     private final static int HARD_ROWS = 5;
     private final static int HARD_COLS = 4;
-    private final static int HARD_NUM_OF_CARDS = 20;
 
-    private static int[] emjoiesArr = {R.drawable.p1,
-            R.drawable.p2,
-            R.drawable.p3,
-            R.drawable.p4,
-            R.drawable.p5,
-            R.drawable.p6,
-            R.drawable.p7,
-            R.drawable.p8,
-            R.drawable.p9,
-            R.drawable.p10};
+    private static int[] emjoiesArr =
+            {R.drawable.p1,
+                    R.drawable.p2,
+                    R.drawable.p3,
+                    R.drawable.p4,
+                    R.drawable.p5,
+                    R.drawable.p6,
+                    R.drawable.p7,
+                    R.drawable.p8,
+                    R.drawable.p9,
+                    R.drawable.p10};
 
 
     private String difficultLvl;
@@ -74,7 +72,7 @@ public class CardBoard {
         int emojyId = 0;
         int cardsId = 0;
 
-        this.cardPairsToReveal =rows*cols/2;
+        this.cardPairsToReveal = rows * cols / 2;
 
         cards = new MemoryCard[rows][cols];
         MemoryCard[] tempCards = new MemoryCard[rows * cols];
@@ -113,11 +111,11 @@ public class CardBoard {
         int[] cords = getIndexById(cardId);
         if (cardFlipState.equals("First")) {
             cards[cords[0]][cords[1]].flip();
-            firstCardCord = cords;//TODO check if need to be new;
+            firstCardCord = cords;
 
         } else {
             cards[cords[0]][cords[1]].flip();
-            secondCardCord = cords;//TODO check if need to be new;
+            secondCardCord = cords;
 
             checkMatch();
         }
@@ -129,7 +127,7 @@ public class CardBoard {
 
             cards[firstCardCord[0]][firstCardCord[1]].setIsMatched();
             cards[secondCardCord[0]][secondCardCord[1]].setIsMatched();
-            this.cardPairsToReveal -- ;
+            this.cardPairsToReveal--;
         }
 
 
@@ -151,7 +149,8 @@ public class CardBoard {
         }
         return null; //todo throw error
     }
-    public int  getCardPairsToReveal(){
+
+    public int getCardPairsToReveal() {
         return this.cardPairsToReveal;
     }
 }

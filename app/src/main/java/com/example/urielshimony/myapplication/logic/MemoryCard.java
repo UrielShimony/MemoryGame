@@ -1,11 +1,6 @@
 package com.example.urielshimony.myapplication.logic;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatButton;
-import android.view.View;
-import android.widget.ImageView;
+
 
 import com.example.urielshimony.myapplication.R;
 
