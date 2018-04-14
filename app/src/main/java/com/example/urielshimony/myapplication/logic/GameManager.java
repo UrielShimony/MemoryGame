@@ -7,6 +7,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.example.urielshimony.myapplication.R;
+import com.example.urielshimony.myapplication.UI.GameActivity;
 
 /**
  * Created by urielshimony on 09/04/2018.
@@ -20,16 +21,18 @@ public class GameManager {
     private int cardPairsToReveal;
     private MemoryCard[][] cards;
     private int seconds;
+    private String name;
+    private String gameResult;
 
 
     //initialize game by level
-    public GameManager(String difficultLvl) {
+    public GameManager(String difficultLvl , String name) {
         this.difficultLvl = difficultLvl;
+        this.name = name;
         switch (this.difficultLvl) {
             case "Easy":
                 this.board = new CardBoard("Easy");
                 this.seconds = 30;
-
                 break;
             case "Medium":
                 this.board = new CardBoard("Medium");
@@ -43,48 +46,52 @@ public class GameManager {
         }
         this.cards = this.board.getCards();
         this.timesUp = false;
+        this.cardPairsToReveal = this.board.getCardPairsToReveal();
     }
 
-    public void startGame() {
-        this.StartTimer(this.seconds);
+//    public void startGame() {
+//        this.StartTimer(this.seconds);
+//
+//    }
 
-    }
 
+//    private void StartTimer(int timeToStop) {
+//        Handler handler = new Handler(new Handler.Callback() {
+//            @Override
+//            public boolean handleMessage(Message message) {
+//                int timeToStop = message.getData().getInt("seconds");
+//                tick(timeToStop);
+//                if (timeToStop != 0) {
+//                    StartTimer(--timeToStop);
+//                    return false;
+//                } else {
+//                    endGame();
+//                }
+//                return true;
+//            }
+//        });
+//        Message message = new Message();
+//        Bundle messageData = new Bundle();
+//        messageData.putInt("seconds", timeToStop);
+//        message.setData(messageData);
+//        handler.sendMessageDelayed(message, 1000);
+//    }
+//
+//    private void tick(int seconds) {
+//        this.seconds = seconds;
+//        //((TextView) findViewById(R.id.Timer)).setText("" + seconds);
+//        //TODO delete old version of timer if new version is good
+//
+//    }
 
-    private void StartTimer(int timeToStop) {
-        Handler handler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message message) {
-                int timeToStop = message.getData().getInt("seconds");
-                tick(timeToStop);
-                if (timeToStop != 0) {
-                    StartTimer(--timeToStop);
-                    return false;
-                } else {
-                    endGame();
-                }
-                return true;
-            }
-        });
-        Message message = new Message();
-        Bundle messageData = new Bundle();
-        messageData.putInt("seconds", timeToStop);
-        message.setData(messageData);
-        handler.sendMessageDelayed(message, 1000);
-    }
-
-    private void tick(int seconds) {
-        this.seconds = seconds;
-        //((TextView) findViewById(R.id.Timer)).setText("" + seconds);
-        //TODO send message to ui thread
-
-    }
-
-    private void endGame() {
+    public void endGame() {
         if (isPlayerWon()) {
+
+            gameResult = "win";
 //           TODO wining feedback
         } else {
             //TODO loosing feedback
+            gameResult = "lose";
         }
         // TODO send message to ui thread
     }
@@ -102,13 +109,16 @@ public class GameManager {
 
      public void flipCard( int cardId ,String cardFlipState ){
         this.board.flipCard(cardId, cardFlipState);
-        this.handleMatchs();
+        this.cardPairsToReveal = this.board.getCardPairsToReveal();
+
+         // this.handleMatchs();
      }
 
 
     private void handleMatchs() {
         this.cardPairsToReveal = this.board.getCardPairsToReveal();
-        if (this.cardPairsToReveal == 0) {endGame();
+        if (this.cardPairsToReveal == 0) {
+            endGame();
         }
     }
 
@@ -122,4 +132,19 @@ public class GameManager {
     }
 
 
+    public int getSeconds() {
+        return this.seconds;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getGameResult() {
+        return gameResult;
+    }
+
+    public String getDifficultLvl() {
+        return difficultLvl;
+    }
 }

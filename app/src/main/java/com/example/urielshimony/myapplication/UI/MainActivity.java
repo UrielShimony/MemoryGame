@@ -16,12 +16,13 @@ import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private Calendar BirthDate;
+    private Calendar BirthDate ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Emoji Memory Game");
     }
 
     public void next(View view) {
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         String date = dateInput.getText().toString();
         intent.putExtra("name", name);
         intent.putExtra("date_of_birth", date);
+        intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);//Todo check if need this for getting back from endGameActivity
         startActivity(intent);
     }
 

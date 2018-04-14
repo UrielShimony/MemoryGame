@@ -1,12 +1,16 @@
 package com.example.urielshimony.myapplication.UI;
 
+import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.urielshimony.myapplication.R;
 import com.example.urielshimony.myapplication.logic.GameManager;
@@ -18,15 +22,25 @@ public class GameActivity extends AppCompatActivity {
     private GridLayout gameGrid;
     private Button[][] buttons;
     private String currentFlip;
+    private  int timeToStop;
+    private int timeLeft;
+    private String gameResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Let's Play!");
         setContentView(R.layout.activity_game);
         this.gameGrid = (GridLayout) findViewById(R.id.grid);
         this.currentFlip = "First";
-
+        this.timeToStop = gameManager.getSeconds();
+        startTimer(this.timeToStop);
+        setName(gameManager.getName());
+        setLevel(gameManager.getDifficultLvl());
         setNewGrid(gameManager.getCardBoard().getRows(), gameManager.getCardBoard().getCols());
+
+
+
     }
 
     private void setNewGrid(int rows, int cols) {
@@ -39,7 +53,7 @@ public class GameActivity extends AppCompatActivity {
             for (int j = 0; j < cols; j++) {
                 this.buttons[i][j] = new Button(this);
                 this.buttons[i][j].setBackgroundResource(cards[i][j].getBackImage());
-                this.buttons[i][j].setLayoutParams(new LinearLayout.LayoutParams(250, 250));
+                this.buttons[i][j].setLayoutParams(new LinearLayout.LayoutParams(150, 150));
                 this.buttons[i][j].setTag(cards[i][j]);
                 this.buttons[i][j].setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -87,6 +101,10 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         }
+        if (gameManager.isPlayerWon()) {
+            gameManager.endGame();
+            createEndOfGameActivity();
+        }
     }
 
     public void setEnableAll(boolean enabledValue) {
@@ -103,5 +121,44 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void startTimer(int timeToStop) {//TODO check if timer is working
+        timeLeft = timeToStop;
+        Handler hendler = new Handler();
+        hendler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tick(timeLeft);
+                if (timeLeft != 0) {
+                    startTimer(--timeLeft);
+                } else {
+                    gameManager.endGame();
+                    createEndOfGameActivity();
+                }
+            }
+        }, 2000);
+
+    }
+
+    private void tick(int seconds) {
+        ((TextView) findViewById(R.id.Timer)).setText("" + seconds);
+
+    }
+
+    public void setName(String name) {
+        ((TextView) findViewById(R.id.name)).setText("" + name);
+    }
+
+    public void createEndOfGameActivity()
+    {
+        this.gameResult = gameManager.getGameResult();
+        Intent intent = new Intent(this, EndOfGameActivity.class);
+        intent.putExtra("gameResult", gameResult);
+        startActivity(intent);
+    }
+
+    public void setLevel(String level) {
+        ((TextView) findViewById(R.id.dificultLevelLable)).setText(""+level);
     }
 }

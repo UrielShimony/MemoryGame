@@ -22,22 +22,20 @@ public class choseDifficultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //dont know what is it
         setContentView(R.layout.activity_chose_difficult);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setTitle("Choose Level");
 
         Bundle extras = getIntent().getExtras();
         this.name = extras.getString("name");
         this.date = getIntent().getSerializableExtra("date_of_birth").toString();
+        Toast.makeText(this, "Hello"+this.name, Toast.LENGTH_LONG).show();
 
-        getSupportActionBar().setTitle("Hello " + this.name);
-
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
-        String today = dateFormat.format(Calendar.getInstance().getTime());
-        if (comparDates(today, this.date)) {
-            Toast.makeText(this, "happy birthday", Toast.LENGTH_LONG).show();
+        if(!this.date.equals("")) {
+            DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
+            String today = dateFormat.format(Calendar.getInstance().getTime());
+            if (comparDates(today, this.date)) {
+                Toast.makeText(this, "happy birthday", Toast.LENGTH_LONG).show();
+            }
         }
 
     }
@@ -46,28 +44,23 @@ public class choseDifficultActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.Easy:
                 this.dificultLvl = "Easy";
-                GameActivity.gameManager = new GameManager(this.dificultLvl);
+                GameActivity.gameManager = new GameManager(this.dificultLvl , this.name);
                 break;
             case R.id.Medium:
                 this.dificultLvl = "Medium";
-                GameActivity.gameManager = new GameManager(this.dificultLvl);
+                GameActivity.gameManager = new GameManager(this.dificultLvl,this.name);
                 break;
             case R.id.Hard:
                 this.dificultLvl = "Hard";
-                GameActivity.gameManager = new GameManager(this.dificultLvl);
+                GameActivity.gameManager = new GameManager(this.dificultLvl,this.name);
                 break;
         }
 
-      /*  Intent intent = new Intent(this, GameMediumLevel.class);
+        Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("name", this.name);
         intent.putExtra("date_of_birth", this.date);
         intent.putExtra("difcult_lvl", this.dificultLvl);
-        Log.d("date is", this.date);
-        startActivity(intent);*/
-
-        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
-
 
     }
 

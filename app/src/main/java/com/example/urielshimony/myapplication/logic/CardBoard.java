@@ -130,7 +130,6 @@ public class CardBoard {
             this.cardPairsToReveal--;
         }
 
-
     }
 
     private int[] getIndexById(int cardId) {
