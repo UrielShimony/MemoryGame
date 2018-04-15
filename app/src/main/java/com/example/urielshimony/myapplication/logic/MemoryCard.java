@@ -9,7 +9,7 @@ import com.example.urielshimony.myapplication.R;
  */
 
 public class MemoryCard {
-    static int unRevealdImage = R.drawable.back_image;
+    static int unRevealdImage = R.drawable.back_ground_new;
     private int image;
     private int cardId;
     private int emojiId;
