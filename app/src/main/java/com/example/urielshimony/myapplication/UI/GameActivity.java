@@ -75,6 +75,7 @@ public class GameActivity extends AppCompatActivity {
                         view.setEnabled(false); //TODO set enable false in thr second chose
                         gameManager.flipCard(((MemoryCard) view.getTag()).getCardId(), currentFlip);
                         if (currentFlip.equals("Second")) {
+                            setEnableAll(false);
                             Handler hendler = new Handler();
                             hendler.postDelayed(new Runnable() {
                                 @Override
@@ -84,7 +85,6 @@ public class GameActivity extends AppCompatActivity {
 
                                 }
                             }, 600);
-                            setEnableAll(true);
                         }
                         changeCurrentFlip();
                     }
@@ -130,6 +130,7 @@ public class GameActivity extends AppCompatActivity {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (cards[i][j].getIsBeenMatched()) {
+
                 } else {
                     this.buttons[i][j].setEnabled(enabledValue);
                 }
