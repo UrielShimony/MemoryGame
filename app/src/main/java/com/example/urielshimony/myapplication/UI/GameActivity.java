@@ -48,10 +48,10 @@ public class GameActivity extends AppCompatActivity {
     private void setNewGrid(int rows, int cols) {
         Point size = new Point();
         this.getWindowManager().getDefaultDisplay().getSize(size);
-        final int screenwidth = size.x;
-        final int screenheight = size.y;
-        int buttonsWidth = (int) (screenwidth * 0.8 / cols);
-        int buttonsHeight = (int) (screenheight * 0.6 / rows);
+        final int screenWidth = size.x;
+        final int screenHeight = size.y;
+        int buttonsWidth = (int) (screenWidth * 0.8 / cols);
+        int buttonsHeight = (int) (screenHeight * 0.6 / rows);
 
         Log.d("width", "" + buttonsWidth);
         Log.d("H", "" + buttonsHeight);
@@ -80,8 +80,11 @@ public class GameActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     updateGrid();
+                                    setEnableAll(true);
+
                                 }
                             }, 600);
+                            setEnableAll(true);
                         }
                         changeCurrentFlip();
                     }
@@ -127,9 +130,7 @@ public class GameActivity extends AppCompatActivity {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (cards[i][j].getIsBeenMatched()) {
-                    this.buttons[i][j].setBackgroundResource(cards[i][j].getImage());
                 } else {
-                    this.buttons[i][j].setBackgroundResource(cards[i][j].getBackImage());
                     this.buttons[i][j].setEnabled(enabledValue);
                 }
             }
