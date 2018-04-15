@@ -1,11 +1,13 @@
 package com.example.urielshimony.myapplication.UI;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -22,7 +24,7 @@ public class GameActivity extends AppCompatActivity {
     private GridLayout gameGrid;
     private Button[][] buttons;
     private String currentFlip;
-    private  int timeToStop;
+    private int timeToStop;
     private int timeLeft;
     private String gameResult;
 
@@ -35,25 +37,36 @@ public class GameActivity extends AppCompatActivity {
         this.currentFlip = "First";
         this.timeToStop = gameManager.getSeconds();
         startTimer(this.timeToStop);
+
         setName(gameManager.getName());
         setLevel(gameManager.getDifficultLvl());
         setNewGrid(gameManager.getCardBoard().getRows(), gameManager.getCardBoard().getCols());
 
 
-
     }
 
     private void setNewGrid(int rows, int cols) {
+        Point size = new Point();
+        this.getWindowManager().getDefaultDisplay().getSize(size);
+        final int screenwidth = size.x;
+        final int screenheight = size.y;
+        int buttonsWidth = (int) (screenwidth * 0.8 / cols);
+        int buttonsHeight = (int) (screenheight * 0.6 / rows);
+
+        Log.d("width", "" + buttonsWidth);
+        Log.d("H", "" + buttonsHeight);
+
         gameGrid.removeAllViews();
         gameGrid.setColumnCount(cols);
         gameGrid.setRowCount(rows);
         MemoryCard[][] cards = gameManager.getCards();
+
         this.buttons = new Button[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 this.buttons[i][j] = new Button(this);
                 this.buttons[i][j].setBackgroundResource(cards[i][j].getBackImage());
-                this.buttons[i][j].setLayoutParams(new LinearLayout.LayoutParams(150, 150));
+                this.buttons[i][j].setLayoutParams(new LinearLayout.LayoutParams(buttonsWidth, buttonsHeight));
                 this.buttons[i][j].setTag(cards[i][j]);
                 this.buttons[i][j].setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -150,8 +163,7 @@ public class GameActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.name)).setText("" + name);
     }
 
-    public void createEndOfGameActivity()
-    {
+    public void createEndOfGameActivity() {
         this.gameResult = gameManager.getGameResult();
         Intent intent = new Intent(this, EndOfGameActivity.class);
         intent.putExtra("gameResult", gameResult);
@@ -159,6 +171,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void setLevel(String level) {
-        ((TextView) findViewById(R.id.dificultLevelLable)).setText(""+level);
+        ((TextView) findViewById(R.id.dificultLevelLable)).setText("" + level);
     }
 }

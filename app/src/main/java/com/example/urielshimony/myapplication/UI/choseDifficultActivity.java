@@ -12,7 +12,11 @@ import com.example.urielshimony.myapplication.R;
 import com.example.urielshimony.myapplication.logic.GameManager;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
+
+import static java.lang.Integer.parseInt;
 
 public class choseDifficultActivity extends AppCompatActivity {
     private String date;
@@ -28,9 +32,10 @@ public class choseDifficultActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         this.name = extras.getString("name");
         this.date = getIntent().getSerializableExtra("date_of_birth").toString();
-        Toast.makeText(this, "Hello"+this.name, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Hello" + this.name  +"your age is " +this.getAge(this.date), Toast.LENGTH_LONG).show();
 
-        if(!this.date.equals("")) {
+        if (!this.date.equals("")) {
+
             DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
             String today = dateFormat.format(Calendar.getInstance().getTime());
             if (comparDates(today, this.date)) {
@@ -44,15 +49,15 @@ public class choseDifficultActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.Easy:
                 this.dificultLvl = "Easy";
-                GameActivity.gameManager = new GameManager(this.dificultLvl , this.name);
+                GameActivity.gameManager = new GameManager(this.dificultLvl, this.name);
                 break;
             case R.id.Medium:
                 this.dificultLvl = "Medium";
-                GameActivity.gameManager = new GameManager(this.dificultLvl,this.name);
+                GameActivity.gameManager = new GameManager(this.dificultLvl, this.name);
                 break;
             case R.id.Hard:
                 this.dificultLvl = "Hard";
-                GameActivity.gameManager = new GameManager(this.dificultLvl,this.name);
+                GameActivity.gameManager = new GameManager(this.dificultLvl, this.name);
                 break;
         }
 
@@ -71,6 +76,33 @@ public class choseDifficultActivity extends AppCompatActivity {
         String trimDate2 = date2.substring(0, date2Length - 2);
 
         return trimDate1.equals(trimDate2);
+
+    }
+
+    public int getAge(String birthdate) {
+
+        int thisYear = Calendar.getInstance().get((Calendar.YEAR));
+        int yearOfBirth = thisYear;
+
+
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
+
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFormat.parse(birthdate);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(convertedDate);
+            yearOfBirth = cal.get(Calendar.YEAR);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (yearOfBirth != 0) {
+            return thisYear - yearOfBirth;
+        } else {
+            return 0;
+        }
 
     }
 }
