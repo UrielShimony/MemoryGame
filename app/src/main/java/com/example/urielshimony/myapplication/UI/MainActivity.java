@@ -26,14 +26,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     public void next(View view) {
-        Intent intent = new Intent(this, choseDifficultActivity.class);
         EditText nameInput = findViewById(R.id.name);
         String name = nameInput.getText().toString();
         TextView dateInput = findViewById(R.id.dateResult);
         String date = dateInput.getText().toString();
+
+        //create  choseDifficultActivity
+        Intent intent = new Intent(this, choseDifficultActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("date_of_birth", date);
-        intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);//Todo check if need this for getting back from endGameActivity
         startActivity(intent);
     }
 

@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.GridLayout;
 import android.widget.TextView;
-
 import com.example.urielshimony.myapplication.R;
 import com.example.urielshimony.myapplication.UI.GameActivity;
 
@@ -15,33 +14,38 @@ import com.example.urielshimony.myapplication.UI.GameActivity;
 
 public class GameManager {
     private CardBoard board;
-    //TODO  private int timeToEnd;
     private String difficultLvl;
     private boolean timesUp;
     private int cardPairsToReveal;
     private MemoryCard[][] cards;
     private int seconds;
     private String name;
+    private String date;
     private String gameResult;
+
+    final static int EASY_SECONDS = 30;
+    final static int MEDIUM_SECONDS = 45;
+    final static int HARD_SECONDS = 60;
 
 
     //initialize game by level
-    public GameManager(String difficultLvl , String name) {
+    public GameManager(String difficultLvl, String name, String date) {
         this.difficultLvl = difficultLvl;
         this.name = name;
+        this.date = date;
         switch (this.difficultLvl) {
             case "Easy":
                 this.board = new CardBoard("Easy");
-                this.seconds = 30;
+                this.seconds = EASY_SECONDS;
                 break;
             case "Medium":
                 this.board = new CardBoard("Medium");
-                this.seconds = 45;
+                this.seconds = MEDIUM_SECONDS;
 
                 break;
             case "Hard":
                 this.board = new CardBoard("Hard");
-                this.seconds = 60;
+                this.seconds = HARD_SECONDS;
                 break;
         }
         this.cards = this.board.getCards();
@@ -49,51 +53,12 @@ public class GameManager {
         this.cardPairsToReveal = this.board.getCardPairsToReveal();
     }
 
-//    public void startGame() {
-//        this.StartTimer(this.seconds);
-//
-//    }
-
-
-//    private void StartTimer(int timeToStop) {
-//        Handler handler = new Handler(new Handler.Callback() {
-//            @Override
-//            public boolean handleMessage(Message message) {
-//                int timeToStop = message.getData().getInt("seconds");
-//                tick(timeToStop);
-//                if (timeToStop != 0) {
-//                    StartTimer(--timeToStop);
-//                    return false;
-//                } else {
-//                    endGame();
-//                }
-//                return true;
-//            }
-//        });
-//        Message message = new Message();
-//        Bundle messageData = new Bundle();
-//        messageData.putInt("seconds", timeToStop);
-//        message.setData(messageData);
-//        handler.sendMessageDelayed(message, 1000);
-//    }
-//
-//    private void tick(int seconds) {
-//        this.seconds = seconds;
-//        //((TextView) findViewById(R.id.Timer)).setText("" + seconds);
-//        //TODO delete old version of timer if new version is good
-//
-//    }
-
     public void endGame() {
         if (isPlayerWon()) {
-
             gameResult = "win";
-//           TODO wining feedback
         } else {
-            //TODO loosing feedback
             gameResult = "lose";
         }
-        // TODO send message to ui thread
     }
 
 
@@ -107,21 +72,11 @@ public class GameManager {
     }
 
 
-     public void flipCard( int cardId ,String cardFlipState ){
+    public void flipCard(int cardId, String cardFlipState) {
         this.board.flipCard(cardId, cardFlipState);
         this.cardPairsToReveal = this.board.getCardPairsToReveal();
 
-         // this.handleMatchs();
-     }
-
-
-    private void handleMatchs() {
-        this.cardPairsToReveal = this.board.getCardPairsToReveal();
-        if (this.cardPairsToReveal == 0) {
-            endGame();
-        }
     }
-
 
     public CardBoard getCardBoard() {
         return this.board;
@@ -146,5 +101,9 @@ public class GameManager {
 
     public String getDifficultLvl() {
         return difficultLvl;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

@@ -32,7 +32,7 @@ public class choseDifficultActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         this.name = extras.getString("name");
         this.date = getIntent().getSerializableExtra("date_of_birth").toString();
-        Toast.makeText(this, "Hello" + this.name  +"your age is " +this.getAge(this.date), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Hello " + this.name  +" your age is " +this.getAge(this.date), Toast.LENGTH_LONG).show();
 
         if (!this.date.equals("")) {
 
@@ -49,15 +49,15 @@ public class choseDifficultActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.Easy:
                 this.dificultLvl = "Easy";
-                GameActivity.gameManager = new GameManager(this.dificultLvl, this.name);
+                GameActivity.gameManager = new GameManager(this.dificultLvl, this.name ,this.date);
                 break;
             case R.id.Medium:
                 this.dificultLvl = "Medium";
-                GameActivity.gameManager = new GameManager(this.dificultLvl, this.name);
+                GameActivity.gameManager = new GameManager(this.dificultLvl, this.name , this.date);
                 break;
             case R.id.Hard:
                 this.dificultLvl = "Hard";
-                GameActivity.gameManager = new GameManager(this.dificultLvl, this.name);
+                GameActivity.gameManager = new GameManager(this.dificultLvl, this.name , this.date);
                 break;
         }
 

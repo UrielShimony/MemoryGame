@@ -42,8 +42,8 @@ public class CardBoard {
     private int rows;
     private int cols;
     private MemoryCard[][] cards;
-    private int[] firstCardCord;//= new int[2]; //TODO check if need to be new;
-    private int[] secondCardCord;//= new int[2];
+    private int[] firstCardCord;
+    private int[] secondCardCord;
     private int cardPairsToReveal;
 
     CardBoard(String difficultLvl) {
@@ -146,7 +146,7 @@ public class CardBoard {
                 }
             }
         }
-        return null; //todo throw error
+        return null;
     }
 
     public int getCardPairsToReveal() {

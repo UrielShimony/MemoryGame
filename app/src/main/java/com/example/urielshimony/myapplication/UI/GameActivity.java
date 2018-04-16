@@ -28,8 +28,12 @@ public class GameActivity extends AppCompatActivity {
     private int timeLeft;
     private String gameResult;
 
+    final static int SECOND = 1000;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //init
         super.onCreate(savedInstanceState);
         setTitle("Let's Play!");
         setContentView(R.layout.activity_game);
@@ -37,7 +41,6 @@ public class GameActivity extends AppCompatActivity {
         this.currentFlip = "First";
         this.timeToStop = gameManager.getSeconds();
         startTimer(this.timeToStop);
-
         setName(gameManager.getName());
         setLevel(gameManager.getDifficultLvl());
         setNewGrid(gameManager.getCardBoard().getRows(), gameManager.getCardBoard().getCols());
@@ -45,6 +48,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //create new grid according to spesific rows and cols
     private void setNewGrid(int rows, int cols) {
         Point size = new Point();
         this.getWindowManager().getDefaultDisplay().getSize(size);
@@ -72,7 +76,7 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         view.setBackgroundResource(((MemoryCard) view.getTag()).getImage());
-                        view.setEnabled(false); //TODO set enable false in thr second chose
+                        view.setEnabled(false);
                         gameManager.flipCard(((MemoryCard) view.getTag()).getCardId(), currentFlip);
                         if (currentFlip.equals("Second")) {
                             setEnableAll(false);
@@ -84,7 +88,7 @@ public class GameActivity extends AppCompatActivity {
                                     setEnableAll(true);
 
                                 }
-                            }, 600);
+                            }, SECOND);
                         }
                         changeCurrentFlip();
                     }
@@ -96,6 +100,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    //set if it first or second card
     private void changeCurrentFlip() {
         if (this.currentFlip.equals("First")) this.currentFlip = "Second";
         else {
@@ -103,6 +108,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    //update grid after flip
     private void updateGrid() {
         MemoryCard[][] cards = gameManager.getCards();
         int rows = cards.length;
@@ -123,6 +129,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+
     public void setEnableAll(boolean enabledValue) {
         MemoryCard[][] cards = gameManager.getCards();
         int rows = cards.length;
@@ -138,7 +145,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void startTimer(int timeToStop) {//TODO check if timer is working
+    private void startTimer(int timeToStop) {
         timeLeft = timeToStop;
         Handler hendler = new Handler();
         hendler.postDelayed(new Runnable() {
@@ -152,7 +159,7 @@ public class GameActivity extends AppCompatActivity {
                     createEndOfGameActivity();
                 }
             }
-        }, 2000);
+        }, SECOND);
 
     }
 
@@ -168,6 +175,8 @@ public class GameActivity extends AppCompatActivity {
     public void createEndOfGameActivity() {
         this.gameResult = gameManager.getGameResult();
         Intent intent = new Intent(this, EndOfGameActivity.class);
+        intent.putExtra("name", gameManager.getName());
+        intent.putExtra("date_of_birth", gameManager.getDate());
         intent.putExtra("gameResult", gameResult);
         startActivity(intent);
     }

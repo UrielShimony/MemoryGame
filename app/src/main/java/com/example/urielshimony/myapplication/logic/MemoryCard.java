@@ -17,9 +17,8 @@ public class MemoryCard {
     private boolean isChosenCard;
 
     public MemoryCard(int image, int cardId, int emojiId) {
-        // todo in button image this.setBackgroundResource(unRevealdImage);
+
         this.image = image;
-//        this.viewId = viewId;
         this.cardId = cardId;
         this.emojiId = emojiId;
         this.isChosenCard = false;
