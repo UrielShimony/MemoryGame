@@ -4,11 +4,13 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import android.widget.DatePicker;
 
 import com.example.urielshimony.myapplication.R;
+import com.example.urielshimony.myapplication.logic.HighScoreTable;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -17,12 +19,14 @@ import java.util.GregorianCalendar;
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private Calendar BirthDate ;
+    public static  HighScoreTable highScoreTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Emoji Memory Game");
+        highScoreTable = new HighScoreTable(this);
     }
 
     public void next(View view) {

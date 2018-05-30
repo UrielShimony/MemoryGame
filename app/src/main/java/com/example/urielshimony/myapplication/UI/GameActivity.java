@@ -128,7 +128,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
         if (gameManager.isPlayerWon()) {
-            gameManager.endGame();
+            gameManager.endGame(timeLeft);
             handleEndOfGame();
         }
     }
@@ -159,7 +159,7 @@ public class GameActivity extends AppCompatActivity {
                 if (timeLeft != 0) {
                     startTimer(--timeLeft);
                 } else {
-                    gameManager.endGame();
+                    gameManager.endGame(timeLeft);
                     handleEndOfGame();
                 }
             }
