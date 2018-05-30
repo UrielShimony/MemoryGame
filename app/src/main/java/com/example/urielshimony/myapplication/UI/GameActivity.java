@@ -18,6 +18,10 @@ import com.example.urielshimony.myapplication.R;
 import com.example.urielshimony.myapplication.logic.GameManager;
 import com.example.urielshimony.myapplication.logic.MemoryCard;
 
+import tyrantgit.explosionfield.ExplosionField;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 public class GameActivity extends AppCompatActivity {
 
     static GameManager gameManager;
@@ -27,6 +31,8 @@ public class GameActivity extends AppCompatActivity {
     private int timeToStop;
     private int timeLeft;
     private String gameResult;
+
+    ExplosionField explosionField;
 
     final static int SECOND = 1000;
 
@@ -125,7 +131,7 @@ public class GameActivity extends AppCompatActivity {
         }
         if (gameManager.isPlayerWon()) {
             gameManager.endGame();
-            createEndOfGameActivity();
+            handleEndOfGame();
         }
     }
 
@@ -156,7 +162,7 @@ public class GameActivity extends AppCompatActivity {
                     startTimer(--timeLeft);
                 } else {
                     gameManager.endGame();
-                    createEndOfGameActivity();
+                    handleEndOfGame();
                 }
             }
         }, SECOND);
@@ -173,12 +179,33 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void createEndOfGameActivity() {
-        this.gameResult = gameManager.getGameResult();
         Intent intent = new Intent(this, EndOfGameActivity.class);
         intent.putExtra("name", gameManager.getName());
         intent.putExtra("date_of_birth", gameManager.getDate());
         intent.putExtra("gameResult", gameResult);
         startActivity(intent);
+    }
+
+    public void handleEndOfGame() {
+        this.gameResult = gameManager.getGameResult();
+        renderAnimation();
+        Handler hendler = new Handler();
+        hendler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                createEndOfGameActivity();
+            }
+        }, 1600);
+    }
+
+    public void renderAnimation() {
+        //todo the animate
+        if (this.gameResult.equals("lose")) {
+            explosionField = ExplosionField.attach2Window(this);
+            explosionField.explode(gameGrid);
+        } else if (this.gameResult.equals("win")) {
+
+        }
     }
 
     public void setLevel(String level) {
