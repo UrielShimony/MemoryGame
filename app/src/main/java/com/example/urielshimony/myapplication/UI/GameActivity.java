@@ -19,8 +19,6 @@ import com.example.urielshimony.myapplication.logic.GameManager;
 import com.example.urielshimony.myapplication.logic.MemoryCard;
 
 import tyrantgit.explosionfield.ExplosionField;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -189,22 +187,25 @@ public class GameActivity extends AppCompatActivity {
     public void handleEndOfGame() {
         this.gameResult = gameManager.getGameResult();
         renderAnimation();
-        Handler hendler = new Handler();
-        hendler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                createEndOfGameActivity();
-            }
-        }, 1600);
+        if (this.gameResult.equals("lose")) {
+            Handler hendler = new Handler();
+            hendler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    createEndOfGameActivity();
+                }
+            }, 1300);
+        } else {
+            createEndOfGameActivity();
+        }
     }
 
     public void renderAnimation() {
-        //todo the animate
         if (this.gameResult.equals("lose")) {
             explosionField = ExplosionField.attach2Window(this);
             explosionField.explode(gameGrid);
         } else if (this.gameResult.equals("win")) {
-
+            // animmation in the next activity
         }
     }
 

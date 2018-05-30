@@ -9,6 +9,9 @@ import android.os.Bundle;
 import com.example.urielshimony.myapplication.R;
 import com.example.urielshimony.myapplication.logic.GameManager;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 public class EndOfGameActivity extends AppCompatActivity {
 
     private String gameResult;
@@ -28,7 +31,11 @@ public class EndOfGameActivity extends AppCompatActivity {
         this.gameResult = extras.getString("gameResult");
         if (gameResult.equals("win")) {
             findViewById(R.id.end_of_game_actity).setBackgroundResource(R.drawable.baloon);
-            findViewById(R.id.end_of_game_image).setBackgroundResource(R.drawable.win_image);
+            findViewById(R.id.end_of_game_image).setBackgroundResource(R.drawable.winner_red);
+            YoYo.with(Techniques.Tada)
+                    .duration(400)
+                    .repeat(7)
+                    .playOn(findViewById(R.id.end_of_game_image));
         } else if (gameResult.equals("lose")) {
             findViewById(R.id.end_of_game_actity).setBackgroundColor(Color.RED);
             findViewById(R.id.end_of_game_image).setBackgroundResource(R.drawable.game_over);
