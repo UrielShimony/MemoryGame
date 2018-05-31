@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/activity_background"
+    tools:context="com.example.urielshimony.myapplication.UI.MenuActivity">
+
+    <Button
+        android:id="@+id/play_button"
+        style="@style/AlertDialog.AppCompat.Light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/high_score_button"
+        android:layout_alignEnd="@+id/high_score_button"
+        android:layout_marginBottom="45dp"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/big_noodle_titling"
+        android:text="Play"
+        android:textSize="20dp"
+        android:onClick="play"
+        />
+
+    <Button
+        android:id="@+id/high_score_button"
+        style="@style/AlertDialog.AppCompat.Light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/big_noodle_titling"
+        android:text="High Score Table"
+        android:textSize="20dp"
+        android:onClick="showScoreTable"
+        />
+
+    <Button
+        android:id="@+id/exit_button"
+        style="@style/AlertDialog.AppCompat.Light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/high_score_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="54dp"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/big_noodle_titling"
+        android:text="Exit"
+        android:textSize="20dp"
+        android:onClick="exit"
+        />
+</RelativeLayout>

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         String date = dateInput.getText().toString();
 
         //create  choseDifficultActivity
-        Intent intent = new Intent(this, choseDifficultActivity.class);
+        Intent intent = new Intent(this, MenuActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("date_of_birth", date);
         startActivity(intent);

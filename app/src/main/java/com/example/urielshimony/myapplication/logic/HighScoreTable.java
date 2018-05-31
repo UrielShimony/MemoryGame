@@ -77,4 +77,11 @@ public class HighScoreTable {
        // todo check this.  Collections.sort(table);
 
     }
+
+    public  ArrayList<ScoreEntity> getScoreTable()
+    {
+        return this.scoreTable;
+    }
+
+
 }

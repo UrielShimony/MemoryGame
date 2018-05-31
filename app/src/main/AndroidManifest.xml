@@ -24,7 +24,9 @@
             android:label="@string/title_activity_chose_difficult"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UI.GameActivity" />
-        <activity android:name=".UI.EndOfGameActivity"></activity>
+        <activity android:name=".UI.EndOfGameActivity" />
+        <activity android:name=".UI.HighScoreActivity" />
+        <activity android:name=".UI.MenuActivity"></activity>
     </application>
 
 </manifest>
