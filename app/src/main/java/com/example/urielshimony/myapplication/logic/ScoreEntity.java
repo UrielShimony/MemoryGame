@@ -34,4 +34,9 @@ public class ScoreEntity implements Comparable<ScoreEntity>{
             return 1;
         return 0;
     }
+
+    public String getPlayerName()
+    {
+        return playerName;
+    }
 }
