@@ -61,10 +61,4 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         ((TextView) findViewById(R.id.dateResult)).setText(dateFormat.format(calendar.getTime()));
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("debug", "on destroyed:  calld");
-        highScoreTable.saveTableToMemory();
-    }
 }

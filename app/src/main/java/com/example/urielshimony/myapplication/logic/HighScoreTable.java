@@ -33,7 +33,6 @@ public class HighScoreTable {
         this.scoreTable =new ArrayList<ScoreEntity>();
         this.loadTable(context);
         this.currentMinScore = 0;
-        Log.d("aa", "current size of the array liist in constructor is   " + scoreTable.size());
     }
 
     public void saveEntityToMemory(SharedPreferences.Editor editorTable, ScoreEntity scoreEntity, int index) {

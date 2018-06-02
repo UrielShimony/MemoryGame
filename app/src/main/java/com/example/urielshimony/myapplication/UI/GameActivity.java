@@ -49,7 +49,6 @@ public class GameActivity extends AppCompatActivity {
         setLevel(gameManager.getDifficultLvl());
         setNewGrid(gameManager.getCardBoard().getRows(), gameManager.getCardBoard().getCols());
 
-
     }
 
     //create new grid according to spesific rows and cols

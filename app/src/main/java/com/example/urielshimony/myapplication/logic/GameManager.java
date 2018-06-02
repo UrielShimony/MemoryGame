@@ -63,7 +63,7 @@ public class GameManager {
     }
 
     public void endGame(int timeLeft) {
-        if (true) {
+        if (isPlayerWon()) {
             gameResult = "win";
             this.scoreEntity = new ScoreEntity(this.calculateScore(timeLeft), this.difficultLvl, this.name);
             MainActivity.highScoreTable.udpateScoreTable(this.scoreEntity);

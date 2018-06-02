@@ -1,10 +1,12 @@
 package com.example.urielshimony.myapplication.UI;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.urielshimony.myapplication.R;
 import com.example.urielshimony.myapplication.logic.GameManager;
@@ -49,8 +51,7 @@ public class EndOfGameActivity extends AppCompatActivity {
         }
     }
 
-    private void createLevelActivity()
-    {
+    private void createLevelActivity() {
         Intent intent = new Intent(this, choseDifficultActivity.class);
         intent.putExtra("name", this.name);
         intent.putExtra("date_of_birth", this.date);
