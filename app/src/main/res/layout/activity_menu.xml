@@ -17,10 +17,9 @@
         android:layout_marginBottom="45dp"
         android:background="@color/colorPrimaryDark"
         android:fontFamily="@font/big_noodle_titling"
-        android:text="Play"
-        android:textSize="20dp"
         android:onClick="play"
-        />
+        android:text="Play"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/high_score_button"
@@ -31,10 +30,9 @@
         android:layout_centerVertical="true"
         android:background="@color/colorPrimaryDark"
         android:fontFamily="@font/big_noodle_titling"
-        android:text="High Score Table"
-        android:textSize="20dp"
         android:onClick="showScoreTable"
-        />
+        android:text="High Score Table"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/exit_button"
@@ -46,8 +44,16 @@
         android:layout_marginTop="54dp"
         android:background="@color/colorPrimaryDark"
         android:fontFamily="@font/big_noodle_titling"
-        android:text="Exit"
-        android:textSize="20dp"
         android:onClick="exit"
-        />
+        android:text="Exit"
+        android:textSize="20dp" />
 </RelativeLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>--><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:gravity="center"--><!--android:orientation="vertical">-->
+
+    <!--<TextView--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:id="@+id/isGood"--><!--android:textSize="20sp"--><!--android:text="good"--><!--android:textColor="@android:color/holo_green_light"--><!--android:layout_marginTop="30px"/>--><!--<TextView--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:id="@+id/firstPitch"--><!--android:textSize="20sp"--><!--android:text=""--><!--android:layout_marginTop="30px"/>--><!--<TextView--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:id="@+id/FirstAzi"--><!--android:textSize="20sp"--><!--android:layout_marginTop="30px"--><!--android:text=""/>--><!--<TextView--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:id="@+id/FirstRoll"--><!--android:textSize="20sp"--><!--android:layout_marginTop="30px"--><!--android:text=""/>-->
+
+    <!--<TextView--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:id="@+id/pitch1"--><!--android:textSize="20sp"--><!--android:text="cccc"--><!--android:layout_marginTop="30px"/>--><!--<TextView--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:id="@+id/azi1"--><!--android:textSize="20sp"--><!--android:layout_marginTop="30px"--><!--android:text="bbbb"/>--><!--<TextView--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:id="@+id/roll1"--><!--android:textSize="20sp"--><!--android:layout_marginTop="30px"--><!--android:text="aaaaa"/>-->
+
+    <!--</LinearLayout>-->
