@@ -2,6 +2,8 @@ package com.example.urielshimony.myapplication.UI;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     public void picDate(View view) {
-
         MyDatePicker fragment = new MyDatePicker();
         fragment.show(getFragmentManager(), "show");
     }
@@ -58,5 +59,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private void setDate(Calendar calendar) {
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
         ((TextView) findViewById(R.id.dateResult)).setText(dateFormat.format(calendar.getTime()));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("debug", "on destroyed:  calld");
+        highScoreTable.saveTableToMemory();
     }
 }
