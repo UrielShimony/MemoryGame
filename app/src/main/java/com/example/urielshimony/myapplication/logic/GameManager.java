@@ -1,5 +1,6 @@
 package com.example.urielshimony.myapplication.logic;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -62,10 +63,11 @@ public class GameManager {
         this.cardPairsToReveal = this.board.getCardPairsToReveal();
     }
 
-    public void endGame(int timeLeft) {
+    public void endGame(int timeLeft , Location playerLocation , String address) {
         if (isPlayerWon()) {
             gameResult = "win";
-            this.scoreEntity = new ScoreEntity(this.calculateScore(timeLeft), this.difficultLvl, this.name);
+            this.scoreEntity = new ScoreEntity(this.calculateScore(timeLeft), this.difficultLvl, this.name , address );
+            scoreEntity.setPlayerLocation(playerLocation);
             MainActivity.highScoreTable.udpateScoreTable(this.scoreEntity);
         } else {
             gameResult = "lose";

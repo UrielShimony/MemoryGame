@@ -8,6 +8,10 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Rect;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -23,6 +27,11 @@ import android.widget.TextView;
 import com.example.urielshimony.myapplication.R;
 import com.example.urielshimony.myapplication.logic.GameManager;
 import com.example.urielshimony.myapplication.logic.MemoryCard;
+import com.example.urielshimony.myapplication.logic.PlayerLocation;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import tyrantgit.explosionfield.ExplosionField;
 
@@ -39,6 +48,7 @@ public class GameActivity extends AppCompatActivity {
 
     public MotionService.SensorServiceBinder binder;
     private boolean isServiceBound = false;
+    private PlayerLocation playerLocation;
 
     ExplosionField explosionField;
 
@@ -69,6 +79,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        playerLocation = new PlayerLocation(this);
 
         bindService(new Intent(this, MotionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
         LocalBroadcastManager.getInstance(this)
@@ -92,6 +103,11 @@ public class GameActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
 
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        playerLocation.removeUpdates();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +122,7 @@ public class GameActivity extends AppCompatActivity {
         setName(gameManager.getName());
         setLevel(gameManager.getDifficultLvl());
         setNewGrid(gameManager.getCardBoard().getRows(), gameManager.getCardBoard().getCols());
+
 
     }
 
@@ -149,7 +166,7 @@ public class GameActivity extends AppCompatActivity {
                                     setEnableAll(true);
 
                                 }
-                            }, 400);
+                            }, SECOND);
                         }
                         changeCurrentFlip();
                     }
@@ -185,11 +202,25 @@ public class GameActivity extends AppCompatActivity {
             }
         }
         if (gameManager.isPlayerWon()) {
-            gameManager.endGame(timeLeft);
+            Location tempLocation = playerLocation.getCurrentLocation();
+
+            gameManager.endGame(timeLeft, tempLocation, getAdressStrFromLocation(tempLocation));
             handleEndOfGame();
         }
     }
 
+    private String getAdressStrFromLocation(Location location) {
+        Geocoder g = new Geocoder(this, Locale.getDefault());
+        String address = "";
+        try {
+            List<Address> l = g.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            address += l.get(0).getCountryName().toString() + " " + l.get(0).getLocality() + " " + l.get(0).getThoroughfare();
+            return address;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return " ";
+    }
     private void handleRotation(boolean validity) {
         if (!validity) {
 
@@ -247,7 +278,8 @@ public class GameActivity extends AppCompatActivity {
                 if (timeLeft != 0) {
                     startTimer(--timeLeft);
                 } else {
-                    gameManager.endGame(timeLeft);
+                    Location tempLocation = playerLocation.getCurrentLocation();
+                    gameManager.endGame(timeLeft, tempLocation, getAdressStrFromLocation(tempLocation));
                     handleEndOfGame();
                 }
             }
@@ -258,6 +290,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        playerLocation.removeUpdates();
         Timerhendler.removeCallbacksAndMessages(null);
     }
 
@@ -275,8 +308,6 @@ public class GameActivity extends AppCompatActivity {
         intent.putExtra("name", gameManager.getName());
         intent.putExtra("date_of_birth", gameManager.getDate());
         intent.putExtra("gameResult", gameResult);
-
-        //todo unbound service;
         startActivity(intent);
     }
 

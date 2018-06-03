@@ -1,25 +1,48 @@
 package com.example.urielshimony.myapplication.UI;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.urielshimony.myapplication.R;
+import com.example.urielshimony.myapplication.logic.PlayerLocation;
 import com.example.urielshimony.myapplication.logic.ScoreEntity;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class HighScoreActivity extends AppCompatActivity {
+public class HighScoreActivity extends FragmentActivity {
 
     //private ArrayList<ScoreEntity> scoreTable;
     private TableLayout tl;
+    private PlayerLocation myCurrentLocation;
+    private GoogleMap map;
+    final static int TABLE_SIZE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +51,41 @@ public class HighScoreActivity extends AppCompatActivity {
 
         //get scoreTable
         //scoreTable = MainActivity.highScoreTable.getScoreTable();
-        tl = (TableLayout) findViewById(R.id.high_score_table);
-        showTable(MainActivity.highScoreTable.getScoreTable());
+        myCurrentLocation = new PlayerLocation(this);
 
+        if (isGoogleMapsInstalled()) {
+            MapFragment mapFragment = (MapFragment) getFragmentManager()
+                    .findFragmentById(R.id.map);
+
+            mapFragment.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
+                    setGoogleMap(googleMap);
+                    showPinsOnMap();
+                }
+            });
+        } else {
+            // Notify the user he should install GoogleMaps (after installing Google Play Services)
+            FrameLayout mapsPlaceHolder = (FrameLayout) findViewById(R.id.mapPlaceHolder);
+            TextView errorMessageTextView = new TextView(getApplicationContext());
+            errorMessageTextView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+            errorMessageTextView.setText("missing_google_maps_error_message");
+            errorMessageTextView.setTextColor(Color.RED);
+            mapsPlaceHolder.addView(errorMessageTextView);
+        }
+
+
+        //show score table
+
+        tl = (TableLayout) findViewById(R.id.high_score_table);
+        tl.removeAllViews();
+       // map.clear();
+        showTable(MainActivity.highScoreTable.getScoreTable());
+       showPinsOnMap();
     }
 
     private void showTable(ArrayList<ScoreEntity> scoreTable) {
+
         int rankVal = 1;
         Typeface face;
 
@@ -76,7 +128,7 @@ public class HighScoreActivity extends AppCompatActivity {
         //create the table
         for (ScoreEntity e : scoreTable) {
 
-            if (rankVal <= 10) {//todo make it final or global
+            if (rankVal <= TABLE_SIZE) {
                 TableRow tr = new TableRow(this);
                 TextView rank = new TextView(this);
                 TextView location = new TextView(this);
@@ -85,7 +137,9 @@ public class HighScoreActivity extends AppCompatActivity {
                 // set row text
                 rank.setText((rankVal++) + " ");
                 name.setText(e.getPlayerName());
-                location.setText("location");
+//                if(e.getPlayerLocation()!=null)
+//                     location.setText("0");
+                location.setText(e.getAddress());
 
                 //change font
 //                face = Typeface.createFromAsset(this.getAssets(), "fonts/big_noodle_titling.ttf");
@@ -115,4 +169,99 @@ public class HighScoreActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        myCurrentLocation.removeUpdates();
+    }
+
+    private void showPinsOnMap() {
+        try {
+            int rankVal = 1;
+            LatLng current;
+            for (ScoreEntity e : MainActivity.highScoreTable.getScoreTable()) {
+                /* Create a new row to be added. */
+                if (rankVal <=TABLE_SIZE) {
+                    if (e.getPlayerLocation() != null) {
+                        current = e.getPlayerLocation();
+                        Location temp = new Location(LocationManager.GPS_PROVIDER);
+                        temp.setLatitude(e.getPlayerLocation().latitude);
+                        temp.setLongitude(e.getPlayerLocation().longitude);
+                        map.addMarker(new MarkerOptions()
+                                .title("Rank: " + rankVal + " score: " + e.getScore() + " Name: " + e.getPlayerName())
+                                .snippet(getStreetName(temp))
+                                .position(current)).setIcon(BitmapDescriptorFactory.fromResource(R.drawable.trophy));
+                    }
+                    rankVal++;
+                }
+            }
+        } catch (NullPointerException e) {
+            return;
+        }
+    }
+
+    public boolean isGoogleMapsInstalled() {
+        try {
+            ApplicationInfo info = getPackageManager().getApplicationInfo("com.google.android.apps.maps", 0);
+            return info != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    public void setGoogleMap(GoogleMap googleMap) {
+        this.map = googleMap;
+        boolean isAllowedToUseLocation = hasPermissionForLocationServices();
+        if (isAllowedToUseLocation) {
+            try {
+                googleMap.setMyLocationEnabled(true);
+                LatLng current = new LatLng(myCurrentLocation.getCurrentLocation().getLatitude(), myCurrentLocation.getCurrentLocation().getLongitude());
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 15f));
+
+            } catch (SecurityException exception) {
+                Toast.makeText(this, "Error getting location", Toast.LENGTH_LONG).show();
+            } catch (NullPointerException exception) {
+                Toast.makeText(this, "Error getting location", Toast.LENGTH_LONG).show();
+            }
+
+        } else {
+            Toast.makeText(this, "Location is blocked in this app", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public boolean hasPermissionForLocationServices() {
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            // Because the user's permissions started only from Android M and on...
+            return true;
+        }
+
+        if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // The user blocked the location services of THIS app
+            return false;
+        }
+
+        return true;
+    }
+
+    private String getStreetName(Location location) {
+        Geocoder geoCoder = new Geocoder(this);
+        List<Address> matches = null;
+        try {
+            matches = geoCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
+            return bestMatch.getAddressLine(0);
+        } catch (IOException e) {
+            return "Cant Find Street Name";
+        } catch (NullPointerException e) {
+            return "Cant Find Street Name";
+        }
+    }
 }
+
+
