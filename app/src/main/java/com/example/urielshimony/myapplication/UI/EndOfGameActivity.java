@@ -36,6 +36,13 @@ public class EndOfGameActivity extends AppCompatActivity {
                     .duration(400)
                     .repeat(7)
                     .playOn(findViewById(R.id.end_of_game_image));
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    createMenuActivity();
+                    finish();
+                }
+            }, DELAY_TIME);
         } else if (gameResult.equals("lose")) {
             findViewById(R.id.end_of_game_actity).setBackgroundColor(Color.RED);
             findViewById(R.id.end_of_game_image).setBackgroundResource(R.drawable.game_over);
@@ -52,6 +59,14 @@ public class EndOfGameActivity extends AppCompatActivity {
     private void createLevelActivity()
     {
         Intent intent = new Intent(this, choseDifficultActivity.class);
+        intent.putExtra("name", this.name);
+        intent.putExtra("date_of_birth", this.date);
+        startActivity(intent);
+    }
+
+    private void createMenuActivity()
+    {
+        Intent intent = new Intent(this, MenuActivity.class);
         intent.putExtra("name", this.name);
         intent.putExtra("date_of_birth", this.date);
         startActivity(intent);

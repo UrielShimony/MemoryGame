@@ -137,7 +137,9 @@ public class HighScoreActivity extends FragmentActivity {
                 // set row text
                 rank.setText((rankVal++) + " ");
                 name.setText(e.getPlayerName());
-                location.setText("loca");
+//                if(e.getPlayerLocation()!=null)
+//                     location.setText("0");
+                location.setText(e.getAddress());
 
                 //change font
 //                face = Typeface.createFromAsset(this.getAssets(), "fonts/big_noodle_titling.ttf");
@@ -227,6 +229,7 @@ public class HighScoreActivity extends FragmentActivity {
             } catch (NullPointerException exception) {
                 Toast.makeText(this, "Error getting location", Toast.LENGTH_LONG).show();
             }
+
         } else {
             Toast.makeText(this, "Location is blocked in this app", Toast.LENGTH_LONG).show();
         }
