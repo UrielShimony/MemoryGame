@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.urielshimony.myapplication">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -29,24 +29,35 @@
             android:name=".UI.choseDifficultActivity"
             android:label="@string/title_activity_chose_difficult"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UI.GameActivity"
+        <activity
+            android:name=".UI.GameActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".UI.EndOfGameActivity"
+        <activity
+            android:name=".UI.EndOfGameActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".UI.HighScoreActivity"
+        <activity
+            android:name=".UI.HighScoreActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".UI.MenuActivity"/>
+        <activity
+            android:name=".UI.MenuActivity"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name=".UI.MotionService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBgB9TFuoRCxbPMFz4z8UFUVecs4gJBjQk"/>
+            android:value="AIzaSyBgB9TFuoRCxbPMFz4z8UFUVecs4gJBjQk" />
     </application>
 
     <uses-feature
         android:name="android.hardware.location.gps"
-        android:required="true"/>
+        android:required="true" />
 
 </manifest>
