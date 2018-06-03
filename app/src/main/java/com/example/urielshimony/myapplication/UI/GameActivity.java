@@ -1,10 +1,16 @@
 package com.example.urielshimony.myapplication.UI;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Handler;
-import android.os.Message;
+import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,10 +36,61 @@ public class GameActivity extends AppCompatActivity {
     private int timeLeft;
     private String gameResult;
 
+    public MotionService.SensorServiceBinder binder;
+    private boolean isServiceBound = false;
+
     ExplosionField explosionField;
 
     final static int SECOND = 1000;
 
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+
+            binder = (MotionService.SensorServiceBinder) service;
+            isServiceBound = true;
+            notifyBoundService(MotionService.SensorServiceBinder.START_LISTENING);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            isServiceBound = false;
+
+        }
+
+        void notifyBoundService(String massageFromActivity) {
+            if (isServiceBound && binder != null) {
+                binder.notifyService(massageFromActivity);
+            }
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        bindService(new Intent(this, MotionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mMessageReceiver,
+                        new IntentFilter("motion-change"));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bindService(new Intent(this, MotionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mMessageReceiver,
+                        new IntentFilter("motion-change"));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(serviceConnection);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +148,7 @@ public class GameActivity extends AppCompatActivity {
                                     setEnableAll(true);
 
                                 }
-                            }, SECOND);
+                            }, 400);
                         }
                         changeCurrentFlip();
                     }
@@ -132,6 +189,38 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void handleRotation(boolean validity) {
+        if (!validity) {
+
+            MemoryCard[][] cards = gameManager.getCards();
+            int rows = cards.length;
+            int cols = cards[0].length;
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    this.buttons[i][j].setBackgroundResource(cards[i][j].getBackImage());
+                    this.buttons[i][j].setEnabled(false);
+                }
+            }
+        }
+
+        if (validity) {
+            MemoryCard[][] cards = gameManager.getCards();
+            int rows = cards.length;
+            int cols = cards[0].length;
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (cards[i][j].getIsBeenMatched()) {
+                        this.buttons[i][j].setBackgroundResource(cards[i][j].getImage());
+                    } else {
+
+                        this.buttons[i][j].setEnabled(true);
+                    }
+                }
+            }
+            this.currentFlip = "First";
+        }
+
+    }
 
     public void setEnableAll(boolean enabledValue) {
         MemoryCard[][] cards = gameManager.getCards();
@@ -180,6 +269,8 @@ public class GameActivity extends AppCompatActivity {
         intent.putExtra("name", gameManager.getName());
         intent.putExtra("date_of_birth", gameManager.getDate());
         intent.putExtra("gameResult", gameResult);
+
+        //todo unbound service;
         startActivity(intent);
     }
 
@@ -211,4 +302,22 @@ public class GameActivity extends AppCompatActivity {
     public void setLevel(String level) {
         ((TextView) findViewById(R.id.dificultLevelLable)).setText("" + level);
     }
+
+    // Handling the received Intents for the "my-integer" event
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Extract data included in the Intent
+            boolean state = intent.getBooleanExtra("value", true);
+            Log.d("on recive from srervice", "onReceive: " + state);
+            if (state) {
+                ((TextView) findViewById(R.id.RotationStatus)).setText("");
+            } else {
+                ((TextView) findViewById(R.id.RotationStatus)).setText("Rotate the Phone");
+            }
+            handleRotation(state);
+        }
+    };
+
+
 }
