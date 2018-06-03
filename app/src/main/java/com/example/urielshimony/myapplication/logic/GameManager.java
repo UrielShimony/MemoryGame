@@ -27,7 +27,7 @@ public class GameManager {
 
     private ScoreEntity scoreEntity;
 
-    final static int EASY_SECONDS = 5;
+    final static int EASY_SECONDS = 30;
     final static int MEDIUM_SECONDS = 45;
     final static int HARD_SECONDS = 60;
 
