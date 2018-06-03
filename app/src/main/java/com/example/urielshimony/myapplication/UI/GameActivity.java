@@ -35,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
     private int timeToStop;
     private int timeLeft;
     private String gameResult;
+    Handler Timerhendler = new Handler();
 
     public MotionService.SensorServiceBinder binder;
     private boolean isServiceBound = false;
@@ -239,8 +240,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void startTimer(int timeToStop) {
         timeLeft = timeToStop;
-        Handler hendler = new Handler();
-        hendler.postDelayed(new Runnable() {
+        Timerhendler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 tick(timeLeft);
@@ -253,6 +253,12 @@ public class GameActivity extends AppCompatActivity {
             }
         }, SECOND);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Timerhendler.removeCallbacksAndMessages(null);
     }
 
     private void tick(int seconds) {

@@ -61,7 +61,10 @@ public class MotionService extends Service implements SensorEventListener {
         if (sensorManager != null) {
             sensorManager.unregisterListener(this);
             sensorManager = null;
-        }    }
+        }
+        sensorThread.quit();
+
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -92,12 +95,12 @@ public class MotionService extends Service implements SensorEventListener {
             } else {
                 currentOrientain = getOrientaionFromEvent(event.values);
             }
-if(!hasDefaultVect){
+            if (!hasDefaultVect) {
                 setDefaultVect();
-}
+            }
             boolean tempRotation = checkValidtyRotaionAngle();
             if (tempRotation != isValid) {
-        Log.d("motion Handler", "Detection");
+                Log.d("motion Handler", "Detection");
                 isValid = tempRotation;
                 //TODO notify
                 sendMotionDetection(tempRotation);
@@ -114,7 +117,7 @@ if(!hasDefaultVect){
                     || Math.abs(firstRoll - roll) > 1.5
                     || Math.abs(firstAzimut - azimuth) > 1.5) {
 
-                return  false;
+                return false;
             }
         }
         return true;
@@ -141,16 +144,17 @@ if(!hasDefaultVect){
         intent.putExtra("value", detect);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
     }
 
-    public void setDefaultVect(){
-        if(!hasDefaultVect){
+    public void setDefaultVect() {
+        if (!hasDefaultVect) {
             this.firstAzimut = currentOrientain[0];
             this.firstPitch = currentOrientain[1];
             this.firstRoll = currentOrientain[2];
-            hasDefaultVect=true;
+            hasDefaultVect = true;
         }
     }
 
@@ -187,6 +191,6 @@ if(!hasDefaultVect){
             }
 
 
-            }
+        }
     }
 }
