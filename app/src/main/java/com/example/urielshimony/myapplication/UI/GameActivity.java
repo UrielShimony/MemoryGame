@@ -35,6 +35,12 @@ import java.util.Locale;
 
 import tyrantgit.explosionfield.ExplosionField;
 
+import static com.example.urielshimony.myapplication.FinalStrings.DATE_OF_BIRTH;
+import static com.example.urielshimony.myapplication.FinalStrings.GAME_RESULT;
+import static com.example.urielshimony.myapplication.FinalStrings.MOTION_CHANGE;
+import static com.example.urielshimony.myapplication.FinalStrings.PLAYER_NAME;
+import static com.example.urielshimony.myapplication.FinalStrings.VALIDITY;
+
 public class GameActivity extends AppCompatActivity {
 
     static GameManager gameManager;
@@ -84,7 +90,7 @@ public class GameActivity extends AppCompatActivity {
         bindService(new Intent(this, MotionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mMessageReceiver,
-                        new IntentFilter("motion-change"));
+                        new IntentFilter(MOTION_CHANGE));
     }
 
     @Override
@@ -93,7 +99,7 @@ public class GameActivity extends AppCompatActivity {
         bindService(new Intent(this, MotionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mMessageReceiver,
-                        new IntentFilter("motion-change"));
+                        new IntentFilter("MOTION_CHANGE"));
     }
 
     @Override
@@ -305,9 +311,9 @@ public class GameActivity extends AppCompatActivity {
 
     public void createEndOfGameActivity() {
         Intent intent = new Intent(this, EndOfGameActivity.class);
-        intent.putExtra("name", gameManager.getName());
-        intent.putExtra("date_of_birth", gameManager.getDate());
-        intent.putExtra("gameResult", gameResult);
+        intent.putExtra(PLAYER_NAME, gameManager.getName());
+        intent.putExtra(DATE_OF_BIRTH, gameManager.getDate());
+        intent.putExtra(GAME_RESULT, gameResult);
         startActivity(intent);
     }
 
@@ -345,7 +351,7 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Extract data included in the Intent
-            boolean state = intent.getBooleanExtra("value", true);
+            boolean state = intent.getBooleanExtra(VALIDITY, true);
             Log.d("on recive from srervice", "onReceive: " + state);
             if (state) {
                 ((TextView) findViewById(R.id.RotationStatus)).setText("");

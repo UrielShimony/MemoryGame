@@ -17,6 +17,9 @@ import android.util.Log;
 
 import java.util.List;
 
+import static com.example.urielshimony.myapplication.FinalStrings.MOTION_CHANGE;
+import static com.example.urielshimony.myapplication.FinalStrings.VALIDITY;
+
 public class MotionService extends Service implements SensorEventListener {
 
     private SensorManager sensorManager;
@@ -139,9 +142,9 @@ public class MotionService extends Service implements SensorEventListener {
 
     private void sendMotionDetection(boolean detect) {
         // The string "my-integer" will be used to filer the intent
-        Intent intent = new Intent("motion-change");
+        Intent intent = new Intent(MOTION_CHANGE);
         // Adding some data
-        intent.putExtra("value", detect);
+        intent.putExtra(VALIDITY, detect);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

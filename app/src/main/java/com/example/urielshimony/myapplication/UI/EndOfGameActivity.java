@@ -14,6 +14,10 @@ import com.example.urielshimony.myapplication.logic.GameManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
+import static com.example.urielshimony.myapplication.FinalStrings.DATE_OF_BIRTH;
+import static com.example.urielshimony.myapplication.FinalStrings.GAME_RESULT;
+import static com.example.urielshimony.myapplication.FinalStrings.PLAYER_NAME;
+
 public class EndOfGameActivity extends AppCompatActivity {
 
     private String gameResult;
@@ -28,9 +32,9 @@ public class EndOfGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_end_of_game);
         setTitle("");
         Bundle extras = getIntent().getExtras();
-        this.name = extras.getString("name");
-        this.date = getIntent().getSerializableExtra("date_of_birth").toString();
-        this.gameResult = extras.getString("gameResult");
+        this.name = extras.getString(PLAYER_NAME);
+        this.date = getIntent().getSerializableExtra(DATE_OF_BIRTH).toString();
+        this.gameResult = extras.getString(GAME_RESULT);
         if (gameResult.equals("win")) {
             findViewById(R.id.end_of_game_actity).setBackgroundResource(R.drawable.baloon);
             findViewById(R.id.end_of_game_image).setBackgroundResource(R.drawable.winner_red);
@@ -60,16 +64,16 @@ public class EndOfGameActivity extends AppCompatActivity {
 
     private void createLevelActivity() {
         Intent intent = new Intent(this, choseDifficultActivity.class);
-        intent.putExtra("name", this.name);
-        intent.putExtra("date_of_birth", this.date);
+        intent.putExtra(PLAYER_NAME, this.name);
+        intent.putExtra(DATE_OF_BIRTH, this.date);
         startActivity(intent);
     }
 
     private void createMenuActivity()
     {
         Intent intent = new Intent(this, MenuActivity.class);
-        intent.putExtra("name", this.name);
-        intent.putExtra("date_of_birth", this.date);
+        intent.putExtra(PLAYER_NAME, this.name);
+        intent.putExtra(DATE_OF_BIRTH, this.date);
         startActivity(intent);
     }
 

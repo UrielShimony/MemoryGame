@@ -8,6 +8,9 @@ import android.widget.Toast;
 
 import com.example.urielshimony.myapplication.R;
 
+import static com.example.urielshimony.myapplication.FinalStrings.DATE_OF_BIRTH;
+import static com.example.urielshimony.myapplication.FinalStrings.PLAYER_NAME;
+
 public class MenuActivity extends AppCompatActivity {
 
     private String date;
@@ -20,8 +23,8 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         Bundle extras = getIntent().getExtras();
-        this.name = extras.getString("name");
-        this.date = getIntent().getSerializableExtra("date_of_birth").toString();
+        this.name = extras.getString(PLAYER_NAME);
+        this.date = getIntent().getSerializableExtra(DATE_OF_BIRTH).toString();
 
 
 
@@ -31,8 +34,8 @@ public class MenuActivity extends AppCompatActivity {
     {
         //create  choseDifficultActivity
         Intent intent = new Intent(this, choseDifficultActivity.class);
-        intent.putExtra("name", name);
-        intent.putExtra("date_of_birth", date);
+        intent.putExtra(PLAYER_NAME, name);
+        intent.putExtra(DATE_OF_BIRTH, date);
         startActivity(intent);
 
     }

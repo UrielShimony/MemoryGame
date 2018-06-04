@@ -16,6 +16,9 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.example.urielshimony.myapplication.FinalStrings.DATE_OF_BIRTH;
+import static com.example.urielshimony.myapplication.FinalStrings.DIFFICULT_LVL;
+import static com.example.urielshimony.myapplication.FinalStrings.PLAYER_NAME;
 import static java.lang.Integer.parseInt;
 
 public class choseDifficultActivity extends AppCompatActivity {
@@ -30,8 +33,8 @@ public class choseDifficultActivity extends AppCompatActivity {
         setTitle("Choose Level");
 
         Bundle extras = getIntent().getExtras();
-        this.name = extras.getString("name");
-        this.date = getIntent().getSerializableExtra("date_of_birth").toString();
+        this.name = extras.getString(PLAYER_NAME);
+        this.date = getIntent().getSerializableExtra(DATE_OF_BIRTH).toString();
         Toast.makeText(this, "Hello " + this.name  +" your age is " +this.getAge(this.date), Toast.LENGTH_LONG).show();
 
         if (!this.date.equals("")) {
@@ -62,9 +65,9 @@ public class choseDifficultActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("name", this.name);
-        intent.putExtra("date_of_birth", this.date);
-        intent.putExtra("difcult_lvl", this.dificultLvl);
+        intent.putExtra(PLAYER_NAME, this.name);
+        intent.putExtra(DATE_OF_BIRTH, this.date);
+        intent.putExtra(DIFFICULT_LVL, this.dificultLvl);
         startActivity(intent);
 
     }
@@ -72,8 +75,8 @@ public class choseDifficultActivity extends AppCompatActivity {
     public boolean comparDates(String date1, String date2) {
         int date1Length = date1.length();
         int date2Length = date2.length();
-        String trimDate1 = date1.substring(0, date1Length - 2);
-        String trimDate2 = date2.substring(0, date2Length - 2);
+        String trimDate1 = date1.substring(0, date1Length - 4);
+        String trimDate2 = date2.substring(0, date2Length - 4);
 
         return trimDate1.equals(trimDate2);
 
