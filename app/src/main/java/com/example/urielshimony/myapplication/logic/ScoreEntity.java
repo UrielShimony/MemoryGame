@@ -52,7 +52,8 @@ public class ScoreEntity implements Comparable<ScoreEntity>{
 
     public void setPlayerLocation(Location location ) {
         try {
-            this.playerLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            if(location!=null)
+                this.playerLocation = new LatLng(location.getLatitude(), location.getLongitude());
         }catch (NullPointerException e){
         }
     }

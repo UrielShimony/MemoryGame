@@ -216,6 +216,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private String getAdressStrFromLocation(Location location) {
+        if (location==null)
+            return " ";
         Geocoder g = new Geocoder(this, Locale.getDefault());
         String address = "";
         try {
