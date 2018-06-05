@@ -63,10 +63,10 @@ public class GameManager {
         this.cardPairsToReveal = this.board.getCardPairsToReveal();
     }
 
-    public void endGame(int timeLeft , Location playerLocation , String address) {
+    public void endGame(int timeLeft , Location playerLocation ) {
         if (isPlayerWon()) {
             gameResult = "win";
-            this.scoreEntity = new ScoreEntity(this.calculateScore(timeLeft), this.difficultLvl, this.name , address );
+            this.scoreEntity = new ScoreEntity(this.calculateScore(timeLeft), this.difficultLvl, this.name );
             scoreEntity.setPlayerLocation(playerLocation);
             MainActivity.highScoreTable.udpateScoreTable(this.scoreEntity);
         } else {

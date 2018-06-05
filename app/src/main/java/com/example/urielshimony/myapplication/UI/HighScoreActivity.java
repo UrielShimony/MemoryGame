@@ -78,10 +78,10 @@ public class HighScoreActivity extends FragmentActivity {
         //show score table
 
         tl = (TableLayout) findViewById(R.id.high_score_table);
-        tl.removeAllViews();
+        //tl.removeAllViews();
        // map.clear();
         showTable(MainActivity.highScoreTable.getScoreTable());
-       showPinsOnMap();
+        showPinsOnMap();
     }
 
     private void showTable(ArrayList<ScoreEntity> scoreTable) {
@@ -97,31 +97,31 @@ public class HighScoreActivity extends FragmentActivity {
         rankHeadline.setText("Rank");
 
         //time
-        TextView locationHeadline = new TextView(this);
-        locationHeadline.setText("Location");
+        TextView scoreHeadline = new TextView(this);
+        scoreHeadline.setText("Score");
 
         //name
         TextView nameHeadline = new TextView(this);
         nameHeadline.setText("Name");
 
         rankHeadline.setTextSize(25);
-        locationHeadline.setTextSize(25);
+        scoreHeadline.setTextSize(25);
         nameHeadline.setTextSize(25);
         rankHeadline.setPadding(0, 2, 70, 2);
-        locationHeadline.setPadding(0, 2, 70, 2);
+        scoreHeadline.setPadding(0, 2, 70, 2);
 
 
         rankHeadline.setGravity(Gravity.CENTER);
-        locationHeadline.setGravity(Gravity.CENTER);
+        scoreHeadline.setGravity(Gravity.CENTER);
         nameHeadline.setGravity(Gravity.CENTER);
 
         rankHeadline.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-        locationHeadline.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
+        scoreHeadline.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
         nameHeadline.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
 
         //add the headlines to the view
         headlines.addView(rankHeadline);
-        headlines.addView(locationHeadline);
+        headlines.addView(scoreHeadline);
         headlines.addView(nameHeadline);
         tl.addView(headlines, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
@@ -131,39 +131,31 @@ public class HighScoreActivity extends FragmentActivity {
             if (rankVal <= TABLE_SIZE) {
                 TableRow tr = new TableRow(this);
                 TextView rank = new TextView(this);
-                TextView location = new TextView(this);
+                TextView score = new TextView(this);
                 TextView name = new TextView(this);
 
                 // set row text
                 rank.setText((rankVal++) + " ");
                 name.setText(e.getPlayerName());
-//                if(e.getPlayerLocation()!=null)
-//                     location.setText("0");
-                location.setText(e.getAddress());
-
-                //change font
-//                face = Typeface.createFromAsset(this.getAssets(), "fonts/big_noodle_titling.ttf");
-//                rank.setTypeface(face);
-//                location.setTypeface(face);
-//                name.setTypeface(face);
+                score.setText(e.getScore()+" ");
 
                 rank.setGravity(Gravity.CENTER);
-                location.setGravity(Gravity.CENTER);
+                score.setGravity(Gravity.CENTER);
                 name.setGravity(Gravity.CENTER);
 
                 rank.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-                location.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
+                score.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
                 name.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
 
                 rank.setTextSize(20);
-                location.setTextSize(20);
+                score.setTextSize(20);
                 name.setTextSize(20);
                 rank.setPadding(0, 2, 70, 2);
-                location.setPadding(0, 2, 70, 2);
+                score.setPadding(0, 2, 70, 2);
 
                 // add row to view
                 tr.addView(rank);
-                tr.addView(location);
+                tr.addView(score);
                 tr.addView(name);
                 tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
             }

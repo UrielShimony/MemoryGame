@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         intent.putExtra("name", name);
         intent.putExtra("date_of_birth", date);
         startActivity(intent);
+        finish();
     }
 
     public void picDate(View view) {

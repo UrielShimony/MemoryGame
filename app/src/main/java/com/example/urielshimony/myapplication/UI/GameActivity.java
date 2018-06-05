@@ -209,8 +209,7 @@ public class GameActivity extends AppCompatActivity {
         }
         if (gameManager.isPlayerWon()) {
             Location tempLocation = playerLocation.getCurrentLocation();
-
-            gameManager.endGame(timeLeft, tempLocation, getAdressStrFromLocation(tempLocation));
+            gameManager.endGame(timeLeft, tempLocation);
             handleEndOfGame();
         }
     }
@@ -286,9 +285,11 @@ public class GameActivity extends AppCompatActivity {
                 if (timeLeft != 0) {
                     startTimer(--timeLeft);
                 } else {
-                    Location tempLocation = playerLocation.getCurrentLocation();
-                    gameManager.endGame(timeLeft, tempLocation, getAdressStrFromLocation(tempLocation));
-                    handleEndOfGame();
+                    if (!gameManager.isPlayerWon()) {
+                        Location tempLocation = playerLocation.getCurrentLocation();
+                        gameManager.endGame(timeLeft, tempLocation);
+                        handleEndOfGame();
+                    }
                 }
             }
         }, SECOND);
