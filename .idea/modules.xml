@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MemoryGame.iml" filepath="$PROJECT_DIR$/MemoryGame.iml" />
       <module fileurl="file://C:\MemoryGame\MemoryGame\MemoryGameV2.iml" filepath="C:\MemoryGame\MemoryGame\MemoryGameV2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyApplication.iml" filepath="$PROJECT_DIR$/MyApplication.iml" />
       <module fileurl="file://C:\MemoryGameV2\MyApplication.iml" filepath="C:\MemoryGameV2\MyApplication.iml" />
       <module fileurl="file://C:\MemoryGame\MemoryGame\MyApplication.iml" filepath="C:\MemoryGame\MemoryGame\MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
