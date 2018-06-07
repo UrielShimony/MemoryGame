@@ -10,13 +10,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 /**
  * Created by win10 on 6/2/2018.
  */
 
 public class PlayerLocation implements LocationListener {
-    private Location currentLocation ;
+    private Location currentLocation;
     private boolean didAlreadyRequestLocationPermission;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
     private LocationManager locationManager;
@@ -29,7 +30,7 @@ public class PlayerLocation implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        currentLocation=location;
+        currentLocation = location;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class PlayerLocation implements LocationListener {
             String fineLocationPermission = Manifest.permission.ACCESS_FINE_LOCATION;
             String coarseLocationPermission = Manifest.permission.ACCESS_COARSE_LOCATION;
             if (context.checkSelfPermission(fineLocationPermission) != PackageManager.PERMISSION_GRANTED ||
-            context.checkSelfPermission(coarseLocationPermission) != PackageManager.PERMISSION_GRANTED) {
+                    context.checkSelfPermission(coarseLocationPermission) != PackageManager.PERMISSION_GRANTED) {
                 // The user blocked the location services of THIS app / not yet approved
                 isAccessGranted = false;
                 if (!didAlreadyRequestLocationPermission) {
@@ -65,14 +66,19 @@ public class PlayerLocation implements LocationListener {
                 isAccessGranted = true;
             }
 
-            if (currentLocation == null) {
-                currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            }
+
 
             if (isAccessGranted) {
                 float metersToUpdate = 1;
                 long intervalMilliseconds = 1000;
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, intervalMilliseconds, metersToUpdate, this);
+                if (currentLocation == null) {
+
+                    currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+
+                }
+
             }
         }
     }
@@ -81,7 +87,7 @@ public class PlayerLocation implements LocationListener {
         return currentLocation;
     }
 
-    public void removeUpdates(){
+    public void removeUpdates() {
         locationManager.removeUpdates(this);
     }
 }

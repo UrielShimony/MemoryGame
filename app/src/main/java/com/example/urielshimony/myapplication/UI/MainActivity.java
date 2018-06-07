@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 
 import com.example.urielshimony.myapplication.R;
 import com.example.urielshimony.myapplication.logic.HighScoreTable;
+import com.example.urielshimony.myapplication.logic.PlayerLocation;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         setContentView(R.layout.activity_main);
         setTitle("Emoji Memory Game");
         highScoreTable = new HighScoreTable(this);
+       // PlayerLocation playerLocation = new PlayerLocation(this);
+
     }
 
     public void next(View view) {

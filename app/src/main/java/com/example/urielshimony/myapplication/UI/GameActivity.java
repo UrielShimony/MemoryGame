@@ -364,6 +364,4 @@ public class GameActivity extends AppCompatActivity {
             handleRotation(state);
         }
     };
-
-
 }
