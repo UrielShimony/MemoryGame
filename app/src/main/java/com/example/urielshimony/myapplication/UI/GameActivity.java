@@ -172,7 +172,7 @@ public class GameActivity extends AppCompatActivity {
                                     setEnableAll(true);
 
                                 }
-                            }, SECOND);
+                            }, 600);
                         }
                         changeCurrentFlip();
                     }
