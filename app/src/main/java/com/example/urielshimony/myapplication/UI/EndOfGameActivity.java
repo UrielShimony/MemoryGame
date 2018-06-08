@@ -69,8 +69,7 @@ public class EndOfGameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void createMenuActivity()
-    {
+    private void createMenuActivity() {
         Intent intent = new Intent(this, MenuActivity.class);
         intent.putExtra(PLAYER_NAME, this.name);
         intent.putExtra(DATE_OF_BIRTH, this.date);

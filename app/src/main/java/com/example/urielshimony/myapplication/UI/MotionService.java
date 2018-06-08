@@ -161,10 +161,6 @@ public class MotionService extends Service implements SensorEventListener {
         }
     }
 
-//    public void setSensorServiceListener(SensorServiceListener sensorServiceListener) {
-//        this.sensorServiceListener = sensorServiceListener;
-//    }
-
     class SensorServiceBinder extends Binder {
         static final String START_LISTENING = "Start";
 
@@ -175,7 +171,6 @@ public class MotionService extends Service implements SensorEventListener {
         }
 
         void notifyService(String msg) {
-            // A.D: "you must provide an interface that clients use to communicate with the service, by returning an IBinder."
             Log.d("got msg", " motion service has got a message from its binding activity. Message: " + msg);
 
             if (msg == SensorServiceBinder.START_LISTENING && !isListening) {
@@ -184,7 +179,7 @@ public class MotionService extends Service implements SensorEventListener {
                 Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR); // Sensor.TYPE_GYROSCOPE will be null in Genymotion free edition
                 if (sensor == null && sensorList.size() > 0) {
                     // Backup
-                    Log.d("", "PROBLEMMMMMM");
+                    Log.d("", "PROBLEMMMMMM"); //if is not a real device the service will not work
                 }
 
                 if (sensor == null) return;

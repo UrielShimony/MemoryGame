@@ -34,6 +34,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class HighScoreActivity extends FragmentActivity {
@@ -124,6 +126,10 @@ public class HighScoreActivity extends FragmentActivity {
         headlines.addView(scoreHeadline);
         headlines.addView(nameHeadline);
         tl.addView(headlines, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
+
+        //sort table
+        Collections.sort(scoreTable);
+        Collections.reverse(scoreTable);
 
         //create the table
         for (ScoreEntity e : scoreTable) {
