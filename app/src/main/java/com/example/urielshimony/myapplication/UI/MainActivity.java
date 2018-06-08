@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 
 import com.example.urielshimony.myapplication.R;
 import com.example.urielshimony.myapplication.logic.HighScoreTable;
+import com.example.urielshimony.myapplication.logic.PlayerLocation;
 
 import java.text.DateFormat;
 import java.util.Calendar;

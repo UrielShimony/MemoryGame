@@ -209,8 +209,7 @@ public class GameActivity extends AppCompatActivity {
         }
         if (gameManager.isPlayerWon()) {
             Location tempLocation = playerLocation.getCurrentLocation();
-
-            gameManager.endGame(timeLeft, tempLocation, getAdressStrFromLocation(tempLocation));
+            gameManager.endGame(timeLeft, tempLocation);
             handleEndOfGame();
         }
     }
@@ -286,9 +285,11 @@ public class GameActivity extends AppCompatActivity {
                 if (timeLeft != 0) {
                     startTimer(--timeLeft);
                 } else {
-                    Location tempLocation = playerLocation.getCurrentLocation();
-                    gameManager.endGame(timeLeft, tempLocation, getAdressStrFromLocation(tempLocation));
-                    handleEndOfGame();
+                    if (!gameManager.isPlayerWon()) {
+                        Location tempLocation = playerLocation.getCurrentLocation();
+                        gameManager.endGame(timeLeft, tempLocation);
+                        handleEndOfGame();
+                    }
                 }
             }
         }, SECOND);
@@ -352,7 +353,7 @@ public class GameActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            // Extract data included in the Intent
+  //          // Extract data included in the Intent
             boolean state = intent.getBooleanExtra(VALIDITY, true);
             Log.d("on recive from srervice", "onReceive: " + state);
             if (state) {
@@ -363,6 +364,4 @@ public class GameActivity extends AppCompatActivity {
             handleRotation(state);
         }
     };
-
-
 }

@@ -16,14 +16,12 @@ public class ScoreEntity implements Comparable<ScoreEntity>{
     private int score;
     private String level;
     private LatLng playerLocation;
-    private String address;
 
 
-    public ScoreEntity(int score, String level,String playerName , String address) {
+    public ScoreEntity(int score, String level,String playerName) {
         this.score = score;
         this.level=level;
         this.playerName= playerName;
-        this.address = address;
        // this.highScoreCounter = load(context).size();
     }
 
@@ -58,7 +56,5 @@ public class ScoreEntity implements Comparable<ScoreEntity>{
         }
     }
 
-    public String getAddress() {
-        return address;
-    }
+
 }
