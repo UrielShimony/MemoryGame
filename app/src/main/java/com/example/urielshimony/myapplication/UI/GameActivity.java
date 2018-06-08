@@ -353,7 +353,7 @@ public class GameActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            // Extract data included in the Intent
+  //          // Extract data included in the Intent
             boolean state = intent.getBooleanExtra(VALIDITY, true);
             Log.d("on recive from srervice", "onReceive: " + state);
             if (state) {
