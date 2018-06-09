@@ -34,19 +34,6 @@
         android:text="High Score Table"
         android:textSize="20dp" />
 
-    <Button
-        android:id="@+id/exit_button"
-        style="@style/AlertDialog.AppCompat.Light"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/high_score_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="54dp"
-        android:background="@color/colorPrimaryDark"
-        android:fontFamily="@font/big_noodle_titling"
-        android:onClick="exit"
-        android:text="Exit"
-        android:textSize="20dp" />
 </RelativeLayout>
 
 
