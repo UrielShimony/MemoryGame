@@ -18,10 +18,8 @@ import java.util.Map;
  * Created by urielshimony on 30/05/2018.
  */
 
-// todo on close main activity.... call save to memory
 
 public class HighScoreTable {
-    //todo call a single instance in start of the application.
     final static int MAX_TABLE_SIZE = 10;
     private Context context;
     private ArrayList<ScoreEntity> scoreTable;
@@ -73,7 +71,6 @@ public class HighScoreTable {
             String json = entry.getValue().toString();
             scoreTable.add(new Gson().fromJson(json,ScoreEntity.class));
         }
-       // todo check this.  Collections.sort(table);
 
     }
 
