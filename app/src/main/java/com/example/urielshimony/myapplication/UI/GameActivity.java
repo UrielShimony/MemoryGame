@@ -41,7 +41,7 @@ import static com.example.urielshimony.myapplication.FinalStrings.MOTION_CHANGE;
 import static com.example.urielshimony.myapplication.FinalStrings.PLAYER_NAME;
 import static com.example.urielshimony.myapplication.FinalStrings.VALIDITY;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends ParentActivity {
 
     static GameManager gameManager;
     private GridLayout gameGrid;
@@ -85,8 +85,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        playerLocation = new PlayerLocation(this);
-
+        //playerLocation = new PlayerLocation(this);
+        playerLocation  = getPlayerLocation();
         bindService(new Intent(this, MotionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mMessageReceiver,

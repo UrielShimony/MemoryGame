@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -38,7 +42,6 @@
         <activity
             android:name=".UI.HighScoreActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".UI.MenuActivity"
             android:screenOrientation="portrait" />
@@ -46,7 +49,7 @@
         <service
             android:name=".UI.MotionService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -54,10 +57,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBgB9TFuoRCxbPMFz4z8UFUVecs4gJBjQk" />
-    </application>
 
-    <uses-feature
-        android:name="android.hardware.location.gps"
-        android:required="true" />
+        <activity android:name=".UI.ParentActivity"></activity>
+    </application>
 
 </manifest>

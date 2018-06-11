@@ -11,7 +11,7 @@ import com.example.urielshimony.myapplication.R;
 import static com.example.urielshimony.myapplication.FinalStrings.DATE_OF_BIRTH;
 import static com.example.urielshimony.myapplication.FinalStrings.PLAYER_NAME;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends ParentActivity {
 
     private String date;
     private String name;
